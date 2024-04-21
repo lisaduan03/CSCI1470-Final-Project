@@ -61,4 +61,4 @@ class DataSimulator():
         for _ in range(num_seqs - len(pos_data)):
             neg_data.append(self.gen_neg(seq_lens))
 
-        return self.seqs_to_tens(pos_data), self.seqs_to_tens(neg_data)
+        return self.seqs_to_tens(pos_data), self.seqs_to_tens(neg_data), tf.ones(len(pos_data)), tf.zeros(len(neg_data))
