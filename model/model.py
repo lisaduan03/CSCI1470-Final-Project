@@ -12,13 +12,14 @@ class SelfAttn(tf.keras.layers.Layer):
         super(SelfAttn, self).__init__()
 
     def build(self, input_shape):
+        # doesn't work rn, gives weights of size batch_sz, input (while we want input, output)
         self.K = self.add_weight("K", input_shape, trainable=True)
         self.Q = self.add_weight("Q", input_shape, trainable=True)
         self.V = self.add_weight("V", input_shape, trainable=True)
 
     def call(self, inputs):
 
-        keys, queries, values = inputs
+        keys, queries, values = inputs, inputs, inputs
 
         K = keys @ self.K
         Q = queries @ self.Q
@@ -37,8 +38,6 @@ class Model(tf.keras.Model):
 
         super(Model, self).__init__()
 
-        self.oher = tf.keras.layers.CategoryEncoding(4)
-
         self.num_convolutions = 3
         self.convolutions = []
 
@@ -52,7 +51,7 @@ class Model(tf.keras.Model):
 
         for _ in range(self.num_convolutions):
             self.convolutions.append(tf.keras.layers.Convolution2D(5, (4, 4), (1, 2), padding="SAME"))
-        
+
         for _ in range(self.num_self_attns):
             self.self_attns.append(SelfAttn())
 
@@ -61,7 +60,9 @@ class Model(tf.keras.Model):
 
     def call(self, inputs, training=False):
 
-        x = self.oher(inputs)
+        x = tf.one_hot(inputs, 4, axis=1)
+
+        x = tf.expand_dims(x, -1)
 
         for conv in self.convolutions:
             x = conv(x)
@@ -83,5 +84,5 @@ if __name__ == '__main__':
 
     sim_data.add_interactions([('AAAAAAAA', 'CCCCCCCC'), ('CCCCCCCC', 'TTTTTTTT')])
 
-    print(sim_data.simulate(100, 20))
+    model.call(sim_data.simulate(100, 20)[0][:5])
         
