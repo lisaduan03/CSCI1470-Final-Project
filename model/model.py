@@ -1,10 +1,11 @@
 import tensorflow as tf
 import numpy as np
 import os
+import pandas as pd
 import sys
 import math
 from tqdm import tqdm
-from simulator import DataSimulator
+from simulator import DataSimulator, map_encode
 
 NUM_EPOCHS = 10
 BATCH_SZ = 32
@@ -194,21 +195,38 @@ if __name__ == '__main__':
 
     # sequence length 300 is arbitrary here
     model = Model(300)
-    sim_data = DataSimulator()
 
-    # motifs also arbitrary, maybe try pushing up to match convolution length 
-    # dim of 20
-    sim_data.add_interactions([('AAAAAAAA', 'CCCCCCCC'), ('CCCCCCCC', 'TTTTTTTT')])
+    if sys.argv[1] == 'simulate':
+        sim_data = DataSimulator()
 
-    # rest should be fairly self explanatory here
-    pos, neg, pos_labels, neg_labels = sim_data.simulate(300, 10000)
+        # motifs also arbitrary, maybe try pushing up to match convolution length 
+        # dim of 20
+        sim_data.add_interactions([('AAAAAAAA', 'CCCCCCCC'), ('CCCCCCCC', 'TTTTTTTT')])
 
-    train_X = tf.concat([pos, neg], axis=0)
-    train_y = tf.concat([pos_labels, neg_labels], axis=0)
+        # rest should be fairly self explanatory here
+        pos, neg, pos_labels, neg_labels = sim_data.simulate(300, 10000)
+
+        train_X = tf.concat([pos, neg], axis=0)
+        train_y = tf.concat([pos_labels, neg_labels], axis=0)
+
+        train_y = tf.one_hot(train_y,2)
+    # use data from FASTA file
+    else:
+        seqs = []
+        with open(sys.argv[1] + '.fa', 'r') as f:
+            i = 1
+            for line in f:
+                # every other line of a fasta file contains a sequence
+                if i % 2 == 0:
+                    seqs.append(f.readline()[1:].upper())
+                i += 1
+        # convert DNA sequences to vectors of 0,1,2,3
+        train_X = tf.convert_to_tensor([map_encode(x) for x in seqs])
+        # get label information
+        bed = pd.read_csv(sys.argv[1] + '.txt', sep = '\t', header = None)
+        train_y = tf.convert_to_tensor(bed[3])
 
     inds = tf.random.shuffle(tf.range(train_X.shape[0]))
-
-    train_y = tf.one_hot(train_y,2)
 
     model.call(train_X)
 
