@@ -8,13 +8,16 @@ from tqdm import tqdm
 from simulator import DataSimulator, map_encode
 import random
 from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 
 
 
-NUM_EPOCHS = 3 # LD changed to see if real data would train
+
+NUM_EPOCHS = 1 # LD changed to see if real data would train
 BATCH_SZ = 32
 
 # add more weight to positives in BCE loss
+
 
 class SelfAttn(tf.keras.layers.Layer):
     '''
@@ -90,7 +93,12 @@ class SelfAttn(tf.keras.layers.Layer):
         single_head_attns = tf.concat([tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask) @ v for q, k, v in zip(Q, K, V)], axis=-1)
 
         # combine single head information via dense layer
-        return single_head_attns @ self.W
+        attn_output = single_head_attns @ self.W
+
+        # residual connection
+        attn_output += inputs
+        
+        return attn_output
 
 class Model(tf.keras.Model):
     '''
@@ -126,6 +134,9 @@ class Model(tf.keras.Model):
         self.num_dense = 2
         self.dense = []
 
+        # self.bidirectional_lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(units=20, return_sequences=True))
+
+
         # if we change padding to VALID, will have to compute conv_out_shape 
         # successively for each layer so that we get a correct out_shape to 
         # pass into self attention layer weight build
@@ -146,10 +157,11 @@ class Model(tf.keras.Model):
         self.conv_out_shape = (self.seq_len - 20)//5 + 1
 
         # 30 is an arbitrary hyperparam here, feel free to change
+        # changed to 96 for the real data
         # 5 is also arbitrary (num of heads)
-        self.self_attns.append(SelfAttn(self.conv_out_shape, 30, 5))
+        self.self_attns.append(SelfAttn(self.conv_out_shape, 96, 5))
         for _ in range(self.num_self_attns):
-            self.self_attns.append(SelfAttn(30, 30, 5))
+            self.self_attns.append(SelfAttn(96, 96, 5))
 
         # more arbitrary hyperparams
         for _ in range(self.num_dense):
@@ -196,12 +208,33 @@ class Model(tf.keras.Model):
         for self_attn in self.self_attns:
             x = self_attn(x)
 
+        # LD: add biLSTM here
+        # self.bidirectional_lstm(x)
+
         x = self.flatten(x)
 
         for dense in self.dense:
             x = dense(x)
         
         return x
+    
+    def show_figures(self, history):
+        plt.plot(history['auc'])
+        plt.plot(history['val_auc'])
+        plt.title('model AUC')
+        plt.ylabel('AUC')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'validation'])
+        plt.show()
+
+        plt.plot(history['loss'])
+        # plt.plot(history['val_loss'])
+        plt.title('model loss')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'validation'])
+        plt.savefig('loss')
+
 
 if __name__ == '__main__':
 
@@ -264,12 +297,16 @@ if __name__ == '__main__':
         train_y_numpy = train_y.numpy()
         
         train_X_numpy, test_X_numpy, train_y_numpy, test_y_numpy = train_test_split(train_X_numpy, train_y_numpy, test_size=1 - split_ratio, random_state=42)
+        train_X_numpy, val_X_numpy, train_y_numpy, val_y_numpy = train_test_split(train_X_numpy, train_y_numpy, test_size=0.25, random_state=42)
+
 
         # converting back to tensors
         train_X = tf.convert_to_tensor(train_X_numpy)
         test_X = tf.convert_to_tensor(test_X_numpy)
         train_y = tf.convert_to_tensor(train_y_numpy)
         test_y = tf.convert_to_tensor(test_y_numpy)
+        val_X = tf.convert_to_tensor(val_X_numpy)
+        val_y = tf.convert_to_tensor(val_y_numpy)
 
     inds = tf.random.shuffle(tf.range(train_X.shape[0]))
 
@@ -281,11 +318,41 @@ if __name__ == '__main__':
     model.compile(
         optimizer=tf.keras.optimizers.legacy.Adam(),
         loss=tf.keras.losses.BinaryCrossentropy(),
-        metrics=[tf.keras.metrics.categorical_accuracy]
-    )
+        metrics=[
+        tf.keras.metrics.AUC(
+            num_thresholds=200,
+            curve='ROC',
+            summation_method='interpolation',
+            name='auc',  # Training AUC
+            dtype=None,
+            thresholds=None,
+            multi_label=False,
+            num_labels=None,
+            label_weights=None,
+            from_logits=False
+        ),
+        tf.keras.metrics.AUC(
+            num_thresholds=200,
+            curve='ROC',
+            summation_method='interpolation',
+            name='val_auc',  # validation
+            dtype=None,
+            thresholds=None,
+            multi_label=False,
+            num_labels=None,
+            label_weights=None,
+            from_logits=False
+        )
+    ]
+)
 
-    model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS)
+    history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
+    model.show_figures(history.history)
 
+
+    model.save("model saved.hd5")
+
+    model.show_figures(history.history)
     # testing
     inds = tf.random.shuffle(tf.range(test_X.shape[0]))
 
@@ -297,4 +364,5 @@ if __name__ == '__main__':
     print(test_y[0], model.call(tf.expand_dims(test_X[0], 0)))
     print(test_y[5], model.call(tf.expand_dims(test_X[5], 0)))
     print(test_y[7], model.call(tf.expand_dims(test_X[7], 0)))
-        
+
+    
