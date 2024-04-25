@@ -7,9 +7,11 @@ import math
 from tqdm import tqdm
 from simulator import DataSimulator, map_encode
 import random
+from sklearn.model_selection import train_test_split
 
 
-NUM_EPOCHS = 10
+
+NUM_EPOCHS = 3 # LD changed to see if real data would train
 BATCH_SZ = 32
 
 # add more weight to positives in BCE loss
@@ -140,6 +142,7 @@ class Model(tf.keras.Model):
 
         # 20 and 5 are coming from the max pooling layer here, given prior two
         # convolutions both keep same dimensions
+        print("self.seq_len: ", self.seq_len)
         self.conv_out_shape = (self.seq_len - 20)//5 + 1
 
         # 30 is an arbitrary hyperparam here, feel free to change
@@ -155,9 +158,13 @@ class Model(tf.keras.Model):
         # can do 2, softmax (works easier with loss function I've put in) or
         # 1, sigmoid...both should theoretically work, but may have to code 
         # custom loss func as keras BCEs are a little finnicky
+
+        # LD: 2 was not working so I changed to 1 and sigmoid. kept BCE
+        # nvm changed it back. think cuz the depth for ohe of labels was set to 2
         self.dense.append(tf.keras.layers.Dense(2, activation='softmax'))
 
-    def call(self, inputs, training=False):
+        # LD: there was an unexpected argument issue with this training flag so I took it out
+    def call(self, inputs): # Training=False
         '''
         Call function for our SATORI model. Does 1D convolutions, gets rid of 
         the channel dimension, then does self attention and dense layers. 
@@ -171,6 +178,9 @@ class Model(tf.keras.Model):
         --------
         Resulting enhancer label distribution
         '''
+
+        print("inputs: ", inputs)
+        # the shape is (11654, 499)
 
         x = tf.one_hot(inputs, 4, axis=1)
 
@@ -196,7 +206,7 @@ class Model(tf.keras.Model):
 if __name__ == '__main__':
 
     # sequence length 300 is arbitrary here
-    model = Model(300)
+    model = Model(499)
 
     if sys.argv[1] == 'simulate':
         sim_data = DataSimulator()
@@ -212,6 +222,14 @@ if __name__ == '__main__':
         train_y = tf.concat([pos_labels, neg_labels], axis=0)
 
         train_y = tf.one_hot(train_y,2)
+
+        # testing
+        test_pos, test_neg, test_pos_labels, test_neg_labels = sim_data.simulate(300, BATCH_SZ)
+
+        test_X = tf.concat([test_pos, test_neg], axis=0)
+        test_y = tf.concat([test_pos_labels, test_neg_labels], axis=0)
+
+        test_y = tf.one_hot(test_y,2)
     # use data from FASTA file
     else:
         seqs = []
@@ -231,13 +249,27 @@ if __name__ == '__main__':
             seqs[i] = seqs[i].replace('H', random.choice(list(DNAalphabet.keys())))
             seqs[i] = seqs[i].replace('R',list(DNAalphabet.keys())[random.choice([0,2])])
             # Why is there a 4 lol? 
-            seqs[i] = seqs[i].replace("4", random.choice(list(DNAalphabet.keys())))
+            # seqs[i] = seqs[i].replace("4", random.choice(list(DNAalphabet.keys())))
         # convert DNA sequences to vectors of 0,1,2,3
         train_X = tf.convert_to_tensor([map_encode(x) for x in seqs])
         
         # get label information
         bed = pd.read_csv(sys.argv[1] + '.txt', sep = '\t', header = None)
-        train_y = tf.convert_to_tensor(bed[3])
+        train_y = tf.one_hot(tf.convert_to_tensor(bed[3]), depth=2)
+
+        split_ratio = 0.8  # IDK what is is for simulated currently? didn't look thru the code
+
+        # maybe this is dumb: converting to numpy 
+        train_X_numpy = train_X.numpy()
+        train_y_numpy = train_y.numpy()
+        
+        train_X_numpy, test_X_numpy, train_y_numpy, test_y_numpy = train_test_split(train_X_numpy, train_y_numpy, test_size=1 - split_ratio, random_state=42)
+
+        # converting back to tensors
+        train_X = tf.convert_to_tensor(train_X_numpy)
+        test_X = tf.convert_to_tensor(test_X_numpy)
+        train_y = tf.convert_to_tensor(train_y_numpy)
+        test_y = tf.convert_to_tensor(test_y_numpy)
 
     inds = tf.random.shuffle(tf.range(train_X.shape[0]))
 
@@ -254,13 +286,7 @@ if __name__ == '__main__':
 
     model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS)
 
-    test_pos, test_neg, test_pos_labels, test_neg_labels = sim_data.simulate(300, BATCH_SZ)
-
-    test_X = tf.concat([test_pos, test_neg], axis=0)
-    test_y = tf.concat([test_pos_labels, test_neg_labels], axis=0)
-
-    test_y = tf.one_hot(test_y,2)
-
+    # testing
     inds = tf.random.shuffle(tf.range(test_X.shape[0]))
 
     test_X = tf.gather(test_X, inds)
