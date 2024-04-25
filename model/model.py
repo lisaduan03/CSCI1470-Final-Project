@@ -6,6 +6,8 @@ import sys
 import math
 from tqdm import tqdm
 from simulator import DataSimulator, map_encode
+import random
+
 
 NUM_EPOCHS = 10
 BATCH_SZ = 32
@@ -218,10 +220,21 @@ if __name__ == '__main__':
             for line in f:
                 # every other line of a fasta file contains a sequence
                 if i % 2 == 0:
-                    seqs.append(f.readline()[1:].upper())
+                    seqs.append(line[1:].rstrip().upper())
                 i += 1
+        
+        # convert 'N'and 'H' to random base
+        DNAalphabet = {'A': '0', 'C': '1', 'G': '2', 'T': '3'}
+        for i in range(len(seqs)):
+            seqs[i] = seqs[i].replace('N', random.choice(list(DNAalphabet.keys())))
+            # NOT QUITE sure what to do with H, not in satori
+            seqs[i] = seqs[i].replace('H', random.choice(list(DNAalphabet.keys())))
+            seqs[i] = seqs[i].replace('R',list(DNAalphabet.keys())[random.choice([0,2])])
+            # Why is there a 4 lol? 
+            seqs[i] = seqs[i].replace("4", random.choice(list(DNAalphabet.keys())))
         # convert DNA sequences to vectors of 0,1,2,3
         train_X = tf.convert_to_tensor([map_encode(x) for x in seqs])
+        
         # get label information
         bed = pd.read_csv(sys.argv[1] + '.txt', sep = '\t', header = None)
         train_y = tf.convert_to_tensor(bed[3])
