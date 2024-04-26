@@ -89,8 +89,19 @@ class SelfAttn(tf.keras.layers.Layer):
         mask = tf.convert_to_tensor(value=mask_vals, dtype=tf.float32)
         atten_mask = tf.tile(tf.reshape(mask, [-1, Q[0].shape[-2], K[0].shape[-2]]), [tf.shape(input=K[0])[0], 1, 1])
 
-        # computing a list of single head attentions, concatenated as a tensor
-        single_head_attns = tf.concat([tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask) @ v for q, k, v in zip(Q, K, V)], axis=-1)
+        # computing a list of single head attentions, concatenated as a tensor  
+        # changed to for loop by JC to allow for attention score extraction 
+        single_head_attns = []
+        pAttn_concat = tf.zeros([6992,4,4])  # HARDCODED!!!! should be same shape as attn_scores
+        for q, k, v in zip(Q, K, V):
+            attn_scores = tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask)
+            outs = attn_scores @ v
+            single_head_attns.append(outs)
+            pAttn_concat = tf.concat([pAttn_concat, attn_scores], axis=0)
+        single_head_attns = tf.concat(single_head_attns, axis = -1)
+
+        # old code: 
+        # single_head_attns = tf.concat([tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask) @ v for q, k, v in zip(Q, K, V)], axis=-1)
 
         # combine single head information via dense layer
         attn_output = single_head_attns @ self.W
@@ -98,7 +109,7 @@ class SelfAttn(tf.keras.layers.Layer):
         # residual connection
         attn_output += inputs
         
-        return attn_output
+        return attn_output, pAttn_concat
 
 class Model(tf.keras.Model):
     '''
@@ -202,11 +213,14 @@ class Model(tf.keras.Model):
         for conv in self.convolutions:
             x = conv(x)
 
+
+        print('hereeee')
+        # print(x)
         # removing "channel" for conv2D
         x = tf.reshape(x, (-1, 4, self.conv_out_shape))
 
         for self_attn in self.self_attns:
-            x = self_attn(x)
+            x, pAttn_concat = self_attn(x)  # don't need attention scores here 
 
         # LD: add biLSTM here
         # self.bidirectional_lstm(x)
@@ -349,8 +363,7 @@ if __name__ == '__main__':
     history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
     model.show_figures(history.history)
 
-
-    model.save("model saved.hd5")
+    model.save("saved_model.hd5")
 
     model.show_figures(history.history)
     # testing
@@ -359,7 +372,15 @@ if __name__ == '__main__':
     test_X = tf.gather(test_X, inds)
     test_y = tf.gather(test_y, inds)
 
+    print('here:')
+    import pickle as pkl
+    with open('test_X.pkl', 'wb') as f:
+        pkl.dump(test_X, f)
+    with open('test_y.pkl', 'wb') as f:
+        pkl.dump(test_y, f)
+
     print(model.test_on_batch(test_X, test_y))
+    
 
     print(test_y[0], model.call(tf.expand_dims(test_X[0], 0)))
     print(test_y[5], model.call(tf.expand_dims(test_X[5], 0)))
