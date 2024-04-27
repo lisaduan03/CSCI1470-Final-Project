@@ -14,7 +14,7 @@ def get_model_outputs(model, test_x, test_y, batch_size=128):
         batch_seqs = test_x[i-batch_size:i]
         batch_labels = test_y[i-batch_size:i]
         seqs = [map_decode(seq) for seq in batch_seqs.numpy()]
-        per_batch_testSeqs[batch_idx] = np.array(seqs)  # might need to use np.column_stack(headers,seqs) headers might be region coordinates
+        per_batch_testSeqs[batch_idx] = np.array(seqs)  # might need to use np.column_stack(headers,seqs) headers are probably region coordinates. 
         # call model
         x = tf.one_hot(batch_seqs, 4, axis=1)
         x = tf.expand_dims(x, -1)

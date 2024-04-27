@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 
 
-NUM_EPOCHS = 1 # LD changed to see if real data would train
+NUM_EPOCHS = 15 # LD changed to see if real data would train
 BATCH_SZ = 32
 
 # add more weight to positives in BCE loss
@@ -139,13 +139,13 @@ class Model(tf.keras.Model):
 
         self.flatten = tf.keras.layers.Flatten()
 
-        self.num_self_attns = 1
+        self.num_self_attns = 0
         self.self_attns = []
 
-        self.num_dense = 2
+        self.num_dense = 1
         self.dense = []
 
-        # self.bidirectional_lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(units=20, return_sequences=True))
+        self.bidirectional_lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(units=7, return_sequences=True))
 
 
         # if we change padding to VALID, will have to compute conv_out_shape 
@@ -156,10 +156,10 @@ class Model(tf.keras.Model):
             # essentially 1D, but the 20 and 5 are arbitrary hyperparameters 
             # (although the 20 param should match what we expect to be our 
             # motif lengths, at least for first conv layer)
-            self.convolutions.append(tf.keras.layers.Convolution2D(5, (4, 20), (1, 1), padding="SAME"))
+            self.convolutions.append(tf.keras.layers.Convolution2D(7, (4, 15), (1, 1), padding="SAME"))
 
         # arbitrary second conv
-        self.convolutions.append(tf.keras.layers.Convolution2D(1, (4, 20), (1, 1), padding="SAME"))
+        self.convolutions.append(tf.keras.layers.Convolution2D(1, (4, 7), (1, 1), padding="SAME"))
         self.convolutions.append(tf.keras.layers.MaxPool2D((1, 20), (1, 5)))
 
         # 20 and 5 are coming from the max pooling layer here, given prior two
@@ -170,13 +170,13 @@ class Model(tf.keras.Model):
         # 30 is an arbitrary hyperparam here, feel free to change
         # changed to 96 for the real data
         # 5 is also arbitrary (num of heads)
-        self.self_attns.append(SelfAttn(self.conv_out_shape, 96, 5))
+        self.self_attns.append(SelfAttn(self.conv_out_shape, 57, 3))
         for _ in range(self.num_self_attns):
-            self.self_attns.append(SelfAttn(96, 96, 5))
+            self.self_attns.append(SelfAttn(57, 57, 5))
 
         # more arbitrary hyperparams
         for _ in range(self.num_dense):
-            self.dense.append(tf.keras.layers.Dense(10, activation='leaky_relu'))
+            self.dense.append(tf.keras.layers.Dense(5, activation='leaky_relu'))
         
         # can do 2, softmax (works easier with loss function I've put in) or
         # 1, sigmoid...both should theoretically work, but may have to code 
@@ -213,17 +213,15 @@ class Model(tf.keras.Model):
         for conv in self.convolutions:
             x = conv(x)
 
-
-        print('hereeee')
         # print(x)
         # removing "channel" for conv2D
         x = tf.reshape(x, (-1, 4, self.conv_out_shape))
 
-        for self_attn in self.self_attns:
-            x, pAttn_concat = self_attn(x)  # don't need attention scores here 
-
         # LD: add biLSTM here
         # self.bidirectional_lstm(x)
+
+        for self_attn in self.self_attns:
+            x, pAttn_concat = self_attn(x)  # don't need attention scores here 
 
         x = self.flatten(x)
 
@@ -253,17 +251,18 @@ class Model(tf.keras.Model):
 if __name__ == '__main__':
 
     # sequence length 300 is arbitrary here
-    model = Model(499)
+    model = Model(300)
 
     if sys.argv[1] == 'simulate':
         sim_data = DataSimulator()
 
         # motifs also arbitrary, maybe try pushing up to match convolution length 
         # dim of 20
-        sim_data.add_interactions([('AAAAAAAA', 'CCCCCCCC'), ('CCCCCCCC', 'TTTTTTTT')])
+        # sim_data.add_interactions([('AAAAAAAA', 'CCCCCCCC'), ('CCCCCCCC', 'TTTTTTTT')])
+        sim_data.add_interactions([('GTAAAATCG', 'TTAGTC'), ('GCAGGCAG', 'AAGTTGTT')])
 
         # rest should be fairly self explanatory here
-        pos, neg, pos_labels, neg_labels = sim_data.simulate(300, 10000)
+        pos, neg, pos_labels, neg_labels = sim_data.simulate(110, 5000)
 
         train_X = tf.concat([pos, neg], axis=0)
         train_y = tf.concat([pos_labels, neg_labels], axis=0)
@@ -285,7 +284,7 @@ if __name__ == '__main__':
             for line in f:
                 # every other line of a fasta file contains a sequence
                 if i % 2 == 0:
-                    seqs.append(line[1:].rstrip().upper())
+                    seqs.append(line.rstrip().upper())
                 i += 1
         
         # convert 'N'and 'H' to random base
@@ -304,23 +303,23 @@ if __name__ == '__main__':
         bed = pd.read_csv(sys.argv[1] + '.txt', sep = '\t', header = None)
         train_y = tf.one_hot(tf.convert_to_tensor(bed[3]), depth=2)
 
-        split_ratio = 0.8  # IDK what is is for simulated currently? didn't look thru the code
+    split_ratio = 0.8  # IDK what is is for simulated currently? didn't look thru the code
 
-        # maybe this is dumb: converting to numpy 
-        train_X_numpy = train_X.numpy()
-        train_y_numpy = train_y.numpy()
-        
-        train_X_numpy, test_X_numpy, train_y_numpy, test_y_numpy = train_test_split(train_X_numpy, train_y_numpy, test_size=1 - split_ratio, random_state=42)
-        train_X_numpy, val_X_numpy, train_y_numpy, val_y_numpy = train_test_split(train_X_numpy, train_y_numpy, test_size=0.25, random_state=42)
+    # maybe this is dumb: converting to numpy 
+    train_X_numpy = train_X.numpy()
+    train_y_numpy = train_y.numpy()
+    
+    train_X_numpy, test_X_numpy, train_y_numpy, test_y_numpy = train_test_split(train_X_numpy, train_y_numpy, test_size=1 - split_ratio, random_state=42)
+    train_X_numpy, val_X_numpy, train_y_numpy, val_y_numpy = train_test_split(train_X_numpy, train_y_numpy, test_size=0.25, random_state=42)
 
 
-        # converting back to tensors
-        train_X = tf.convert_to_tensor(train_X_numpy)
-        test_X = tf.convert_to_tensor(test_X_numpy)
-        train_y = tf.convert_to_tensor(train_y_numpy)
-        test_y = tf.convert_to_tensor(test_y_numpy)
-        val_X = tf.convert_to_tensor(val_X_numpy)
-        val_y = tf.convert_to_tensor(val_y_numpy)
+    # converting back to tensors
+    train_X = tf.convert_to_tensor(train_X_numpy)
+    test_X = tf.convert_to_tensor(test_X_numpy)
+    train_y = tf.convert_to_tensor(train_y_numpy)
+    test_y = tf.convert_to_tensor(test_y_numpy)
+    val_X = tf.convert_to_tensor(val_X_numpy)
+    val_y = tf.convert_to_tensor(val_y_numpy)
 
     inds = tf.random.shuffle(tf.range(train_X.shape[0]))
 
@@ -361,18 +360,17 @@ if __name__ == '__main__':
 )
 
     history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
-    model.show_figures(history.history)
+    # model.show_figures(history.history)
 
     model.save("saved_model.hd5")
 
-    model.show_figures(history.history)
+    # model.show_figures(history.history)
     # testing
     inds = tf.random.shuffle(tf.range(test_X.shape[0]))
 
     test_X = tf.gather(test_X, inds)
     test_y = tf.gather(test_y, inds)
 
-    print('here:')
     import pickle as pkl
     with open('test_X.pkl', 'wb') as f:
         pkl.dump(test_X, f)
@@ -380,10 +378,10 @@ if __name__ == '__main__':
         pkl.dump(test_y, f)
 
     print(model.test_on_batch(test_X, test_y))
-    
 
-    print(test_y[0], model.call(tf.expand_dims(test_X[0], 0)))
-    print(test_y[5], model.call(tf.expand_dims(test_X[5], 0)))
-    print(test_y[7], model.call(tf.expand_dims(test_X[7], 0)))
+
+    # print(test_y[0], model.call(tf.expand_dims(test_X[0], 0)))
+    # print(test_y[5], model.call(tf.expand_dims(test_X[5], 0)))
+    # print(test_y[7], model.call(tf.expand_dims(test_X[7], 0)))
 
     
