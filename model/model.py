@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 
 
 
-NUM_EPOCHS = 3 # LD changed to see if real data would train
+NUM_EPOCHS = 10 # LD changed to see if real data would train
 BATCH_SZ = 32
 
 # add more weight to positives in BCE loss
@@ -117,6 +117,7 @@ class Model(tf.keras.Model):
         self.convolutions = []
 
         self.seq_len = seq_len
+        print("seq length", seq_len)
 
         self.flatten = tf.keras.layers.Flatten()
 
@@ -144,6 +145,7 @@ class Model(tf.keras.Model):
         # convolutions both keep same dimensions
         print("self.seq_len: ", self.seq_len)
         self.conv_out_shape = (self.seq_len - 20)//5 + 1
+        print("conv_out_shape", self.conv_out_shape)
 
         # 30 is an arbitrary hyperparam here, feel free to change
         # 5 is also arbitrary (num of heads)
@@ -163,6 +165,8 @@ class Model(tf.keras.Model):
         # nvm changed it back. think cuz the depth for ohe of labels was set to 2
         self.dense.append(tf.keras.layers.Dense(2, activation='softmax'))
 
+        self.positional_encoding = PositionalEncoding(seq_len, self.conv_out_shape, 4)
+
         # LD: there was an unexpected argument issue with this training flag so I took it out
     def call(self, inputs): # Training=False
         '''
@@ -178,20 +182,24 @@ class Model(tf.keras.Model):
         --------
         Resulting enhancer label distribution
         '''
-
         print("inputs: ", inputs)
         # the shape is (11654, 499)
 
         x = tf.one_hot(inputs, 4, axis=1)
-
+        print(x.shape)
         # adding "channel" for conv2D,
         x = tf.expand_dims(x, -1)
+        print(x.shape)
 
         for conv in self.convolutions:
             x = conv(x)
+        print(x.shape)
 
         # removing "channel" for conv2D
         x = tf.reshape(x, (-1, 4, self.conv_out_shape))
+        print('x shape before encoding', x.shape)
+        x = self.positional_encoding(x) # Loss and AUC on read data - [0.6619636416435242, 0.6212739944458008]
+        print('x shape after encoding', x.shape)
 
         for self_attn in self.self_attns:
             x = self_attn(x)
@@ -202,7 +210,46 @@ class Model(tf.keras.Model):
             x = dense(x)
         
         return x
+    
+def positional_encoding(length, depth):
+    ## REFERENCE: https://www.tensorflow.org/text/tutorials/transformer#the_embedding_and_positional_encoding_layer
+    ## TODO: Can remove signature
+    depth = depth/2
+    ## Generate a range of positions and depths 
+    positions = np.arange(length)[:, np.newaxis]    # (seq, 1)
+    depths = np.arange(depth)[np.newaxis, :]/depth  # (1, depth)
+    ## Compute range of radians to take the sine and cosine of.
+    angle_rates = 1 / (10000**depths)               # (1, depth)
+    angle_rads = positions * angle_rates            # (pos, depth)
+    pos_encoding = np.concatenate([np.sin(angle_rads), np.cos(angle_rads)], axis=-1) 
+    ## This serves as offset for the Positional Encoding
+    print("pos encoding",pos_encoding.shape)
+    return tf.cast(pos_encoding, dtype=tf.float32)
 
+
+class PositionalEncoding(tf.keras.layers.Layer):
+    def __init__(self, vocab_size, embed_size, window_size):
+        super().__init__()
+        self.embed_size = embed_size
+
+        ## TODO: Implement Component
+
+        ## Embed labels into an optimizable embedding space
+        self.embedding = tf.keras.layers.Embedding(input_dim=vocab_size, output_dim=1)
+
+        ## Implement sinosoidal positional encoding: offset by varying sinosoidal frequencies. 
+        ## HINT: May want to use the function above...
+        self.pos_encoding = positional_encoding(window_size, embed_size)
+
+    def call(self, x):
+        ## TODO: Get embeddings and and scale them by sqrt of embedding size, and add positional encoding.
+        print('x shape before embedding', x.shape)
+        embeddings = self.embedding(x)
+        print("shape after embedding", embeddings.shape)
+        embeddings = tf.squeeze(embeddings, axis=-1) # Added this bc for some reason embeddings is returning (9323, 4, 96, 96) instead of (9323, 4, 96)
+        scaled_embeddings = embeddings * tf.math.sqrt(tf.cast(self.embed_size, tf.float32))
+        return scaled_embeddings + self.pos_encoding    
+    
 if __name__ == '__main__':
 
     # sequence length 300 is arbitrary here
@@ -281,7 +328,19 @@ if __name__ == '__main__':
     model.compile(
         optimizer=tf.keras.optimizers.legacy.Adam(),
         loss=tf.keras.losses.BinaryCrossentropy(),
-        metrics=[tf.keras.metrics.categorical_accuracy]
+        metrics=[tf.keras.metrics.AUC(
+            num_thresholds=200,
+            curve='ROC',
+            summation_method='interpolation',
+            name=None,
+            dtype=None,
+            thresholds=None,
+            multi_label=False,
+            num_labels=None,
+            label_weights=None,
+            from_logits=False
+        )],
+ #       metrics=[tf.keras.metrics.categorical_accuracy]
     )
 
     model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS)
