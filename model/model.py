@@ -135,16 +135,16 @@ class Model(tf.keras.Model):
             # essentially 1D, but the 20 and 5 are arbitrary hyperparameters 
             # (although the 20 param should match what we expect to be our 
             # motif lengths, at least for first conv layer)
-            self.convolutions.append(tf.keras.layers.Convolution2D(5, (4, 20), (1, 1), padding="SAME"))
+            self.convolutions.append(tf.keras.layers.Convolution2D(5, (4, 25), (1, 1), padding="SAME"))
 
         # arbitrary second conv
-        self.convolutions.append(tf.keras.layers.Convolution2D(1, (4, 20), (1, 1), padding="SAME"))
-        self.convolutions.append(tf.keras.layers.MaxPool2D((1, 20), (1, 5)))
+        self.convolutions.append(tf.keras.layers.Convolution2D(1, (4, 25), (1, 1), padding="SAME"))
+        self.convolutions.append(tf.keras.layers.MaxPool2D((1, 25), (1, 5)))
 
         # 20 and 5 are coming from the max pooling layer here, given prior two
         # convolutions both keep same dimensions
         print("self.seq_len: ", self.seq_len)
-        self.conv_out_shape = (self.seq_len - 20)//5 + 1
+        self.conv_out_shape = (self.seq_len - 25)//5 + 1
         print("conv_out_shape", self.conv_out_shape)
 
         # 30 is an arbitrary hyperparam here, feel free to change
@@ -212,8 +212,6 @@ class Model(tf.keras.Model):
         return x
     
 def positional_encoding(length, depth):
-    ## REFERENCE: https://www.tensorflow.org/text/tutorials/transformer#the_embedding_and_positional_encoding_layer
-    ## TODO: Can remove signature
     depth = depth/2
     ## Generate a range of positions and depths 
     positions = np.arange(length)[:, np.newaxis]    # (seq, 1)
@@ -232,28 +230,18 @@ class PositionalEncoding(tf.keras.layers.Layer):
         super().__init__()
         self.embed_size = embed_size
 
-        ## TODO: Implement Component
-
-        ## Embed labels into an optimizable embedding space
-        self.embedding = tf.keras.layers.Embedding(input_dim=vocab_size, output_dim=1)
 
         ## Implement sinosoidal positional encoding: offset by varying sinosoidal frequencies. 
         ## HINT: May want to use the function above...
         self.pos_encoding = positional_encoding(window_size, embed_size)
 
     def call(self, x):
-        ## TODO: Get embeddings and and scale them by sqrt of embedding size, and add positional encoding.
-        print('x shape before embedding', x.shape)
-        embeddings = self.embedding(x)
-        print("shape after embedding", embeddings.shape)
-        embeddings = tf.squeeze(embeddings, axis=-1) # Added this bc for some reason embeddings is returning (9323, 4, 96, 96) instead of (9323, 4, 96)
-        scaled_embeddings = embeddings * tf.math.sqrt(tf.cast(self.embed_size, tf.float32))
-        return scaled_embeddings + self.pos_encoding    
+        return x + self.pos_encoding    
     
 if __name__ == '__main__':
 
     # sequence length 300 is arbitrary here
-    model = Model(499)
+    model = Model(300)
 
     if sys.argv[1] == 'simulate':
         sim_data = DataSimulator()
