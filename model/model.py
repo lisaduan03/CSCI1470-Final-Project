@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 
 
-NUM_EPOCHS = 15 # LD changed to see if real data would train
+NUM_EPOCHS = 10 # LD changed to see if real data would train
 BATCH_SZ = 32
 
 # add more weight to positives in BCE loss
@@ -145,7 +145,7 @@ class Model(tf.keras.Model):
         self.num_dense = 1
         self.dense = []
 
-        self.bidirectional_lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(units=7, return_sequences=True))
+        # self.bidirectional_lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(units=7, return_sequences=True))
 
 
         # if we change padding to VALID, will have to compute conv_out_shape 
@@ -170,13 +170,13 @@ class Model(tf.keras.Model):
         # 30 is an arbitrary hyperparam here, feel free to change
         # changed to 96 for the real data
         # 5 is also arbitrary (num of heads)
-        self.self_attns.append(SelfAttn(self.conv_out_shape, 57, 3))
+        self.self_attns.append(SelfAttn(self.conv_out_shape, 57, 2))
         for _ in range(self.num_self_attns):
             self.self_attns.append(SelfAttn(57, 57, 5))
 
         # more arbitrary hyperparams
         for _ in range(self.num_dense):
-            self.dense.append(tf.keras.layers.Dense(5, activation='leaky_relu'))
+            self.dense.append(tf.keras.layers.Dense(4, activation='leaky_relu'))
         
         # can do 2, softmax (works easier with loss function I've put in) or
         # 1, sigmoid...both should theoretically work, but may have to code 
@@ -362,7 +362,7 @@ if __name__ == '__main__':
     history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
     # model.show_figures(history.history)
 
-    model.save("saved_model.hd5")
+    model.save("model_promoters_nolstm.hd5")
 
     # model.show_figures(history.history)
     # testing
