@@ -267,16 +267,16 @@ if __name__ == '__main__':
     # sequence length 300 is arbitrary here
     model = Model(300)
 
-    if sys.argv[1] == 'simulate':
+    if len(sys.argv) > 1 and sys.argv[1] == '--simulate':
         sim_data = DataSimulator()
 
         # motifs also arbitrary, maybe try pushing up to match convolution length 
         # dim of 20
         # sim_data.add_interactions([('AAAAAAAA', 'CCCCCCCC'), ('CCCCCCCC', 'TTTTTTTT')])
-        sim_data.add_interactions([('GTAAAATCG', 'TTAGTC'), ('GCAGGCAG', 'AAGTTGTT')])
+        sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('GTAGTCCGTCCCGTA', 'ATCGACGTAGCTAGC'), ('ATCGACGTAGCTAGC', 'CGATTCTAGCTAGCA')])
 
         # rest should be fairly self explanatory here
-        pos, neg, pos_labels, neg_labels = sim_data.simulate(110, 5000)
+        pos, neg, pos_labels, neg_labels = sim_data.simulate(150, 5000, False)
 
         train_X = tf.concat([pos, neg], axis=0)
         train_y = tf.concat([pos_labels, neg_labels], axis=0)
@@ -284,7 +284,7 @@ if __name__ == '__main__':
         train_y = tf.one_hot(train_y,2)
 
         # testing
-        test_pos, test_neg, test_pos_labels, test_neg_labels = sim_data.simulate(300, BATCH_SZ)
+        test_pos, test_neg, test_pos_labels, test_neg_labels = sim_data.simulate(300, BATCH_SZ, False)
 
         test_X = tf.concat([test_pos, test_neg], axis=0)
         test_y = tf.concat([test_pos_labels, test_neg_labels], axis=0)
