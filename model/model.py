@@ -92,7 +92,7 @@ class SelfAttn(tf.keras.layers.Layer):
         # computing a list of single head attentions, concatenated as a tensor  
         # changed to for loop by JC to allow for attention score extraction 
         single_head_attns = []
-        pAttn_concat = tf.zeros([6992,4,4])  # HARDCODED!!!! should be same shape as attn_scores
+        pAttn_concat = tf.zeros([6992,55,55])  # HARDCODED!!!! should be same shape as attn_scores
         for q, k, v in zip(Q, K, V):
             attn_scores = tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask)
             outs = attn_scores @ v
@@ -156,23 +156,23 @@ class Model(tf.keras.Model):
             # essentially 1D, but the 20 and 5 are arbitrary hyperparameters 
             # (although the 20 param should match what we expect to be our 
             # motif lengths, at least for first conv layer)
-            self.convolutions.append(tf.keras.layers.Convolution2D(7, (4, 15), (1, 1), padding="SAME"))
+            self.convolutions.append(tf.keras.layers.Convolution2D(7, (4, 15), (1, 1), padding="VALID"))
 
         # arbitrary second conv
-        self.convolutions.append(tf.keras.layers.Convolution2D(1, (4, 7), (1, 1), padding="SAME"))
-        self.convolutions.append(tf.keras.layers.MaxPool2D((1, 20), (1, 5)))
+        # self.convolutions.append(tf.keras.layers.Convolution2D(1, (4, 7), (1, 1), padding="SAME"))
+        self.convolutions.append(tf.keras.layers.MaxPool2D((1, 15), (1, 5)))
 
         # 20 and 5 are coming from the max pooling layer here, given prior two
         # convolutions both keep same dimensions
         print("self.seq_len: ", self.seq_len)
-        self.conv_out_shape = (self.seq_len - 20)//5 + 1
+        self.conv_out_shape = (self.seq_len - 30)//5 + 1
 
         # 30 is an arbitrary hyperparam here, feel free to change
         # changed to 96 for the real data
         # 5 is also arbitrary (num of heads)
-        self.self_attns.append(SelfAttn(self.conv_out_shape, 57, 2))
-        for _ in range(self.num_self_attns):
-            self.self_attns.append(SelfAttn(57, 57, 5))
+        self.self_attns.append(SelfAttn(7, 7, 2))
+        # for _ in range(self.num_self_attns):
+        #     self.self_attns.append(SelfAttn(57, 57, 5))
 
         # more arbitrary hyperparams
         for _ in range(self.num_dense):
@@ -215,7 +215,7 @@ class Model(tf.keras.Model):
 
         # print(x)
         # removing "channel" for conv2D
-        x = tf.reshape(x, (-1, 4, self.conv_out_shape))
+        x = tf.reshape(x, (-1, self.conv_out_shape, 7))
 
         # LD: add biLSTM here
         # self.bidirectional_lstm(x)
@@ -247,6 +247,19 @@ class Model(tf.keras.Model):
         plt.legend(['train', 'validation'])
         plt.savefig('loss')
 
+def positional_encoding(length, depth):
+    ## REFERENCE: https://www.tensorflow.org/text/tutorials/transformer#the_embedding_and_positional_encoding_layer
+    ## TODO: Can remove signature
+    depth = depth/2
+    ## Generate a range of positions and depths 
+    positions = np.arange(length)[:, np.newaxis]    # (seq, 1)
+    depths = np.arange(depth)[np.newaxis, :]/depth  # (1, depth)
+    ## Compute range of radians to take the sine and cosine of.
+    angle_rates = 1 / (10000**depths)               # (1, depth)
+    angle_rads = positions * angle_rates            # (pos, depth)
+    pos_encoding = np.concatenate([np.sin(angle_rads), np.cos(angle_rads)], axis=-1) 
+    ## This serves as offset for the Positional Encoding
+    return tf.cast(pos_encoding, dtype=tf.float32)
 
 if __name__ == '__main__':
 
