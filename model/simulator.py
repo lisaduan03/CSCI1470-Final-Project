@@ -165,7 +165,7 @@ class DataSimulator():
         encoded_seq = [map_encode(x) for x in seqs]
         return tf.convert_to_tensor(encoded_seq)
 
-    def simulate(self, seq_lens : int, num_seqs : int):
+    def simulate(self, seq_lens : int, num_seqs : int, undir : bool):
         '''
         Simulate 1/2*num_seqs positive sequences and 1/2*num_seqs negative
         sequences, all of length seq_lens. Here, we define positive sequence as 
@@ -195,9 +195,9 @@ class DataSimulator():
                 assert(seq_lens - len(motif1) - len(motif2) > 0)
                 m1 = motif1
                 m2 = motif2
-                if (random.choice([0, 1]) == 1):
-                    m1 = motif1
-                    m2 = motif2   
+                if undir and (random.choice([0, 1]) == 1):
+                    m2 = motif1
+                    m1 = motif2   
                 
                 # choose positions in the new sequence at which to place both 
                 # motifs
@@ -226,9 +226,9 @@ class DataSimulator():
             # same as for positive motif pair
             m1 = motif1
             m2 = motif2
-            if (random.choice([0, 1]) == 1):
-                m1 = motif1
-                m2 = motif2   
+            if undir and (random.choice([0, 1]) == 1):
+                m2 = motif1
+                m1 = motif2   
             start1 = random.randint(0, seq_lens - (len(m1) + len(m2)) - 1)
             start2 = random.randint(start1 + len(m1), seq_lens - len(m2))
         
