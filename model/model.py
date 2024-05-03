@@ -23,7 +23,7 @@ class SelfAttn(tf.keras.layers.Layer):
     Standard multi-headed self attention layer
     '''
 
-    def __init__(self, in_shape, out_shape, num_heads):
+    def __init__(self, in_shape, out_shape, num_heads, conv_out_shape):
         '''
         Initialize self attention layer.
 
@@ -42,6 +42,7 @@ class SelfAttn(tf.keras.layers.Layer):
         self.in_shape = in_shape
         self.out_shape = out_shape
         self.num_heads = num_heads
+        self.conv_out_shape = conv_out_shape
 
     def build(self, input_shape=None):
         '''
@@ -91,7 +92,7 @@ class SelfAttn(tf.keras.layers.Layer):
         # computing a list of single head attentions, concatenated as a tensor  
         # changed to for loop by JC to allow for attention score extraction 
         single_head_attns = []
-        pAttn_concat = tf.zeros([6992,55,55])  # HARDCODED!!!! should be same shape as attn_scores
+        pAttn_concat = tf.zeros([6992,self.conv_out_shape, self.conv_out_shape])
         for q, k, v in zip(Q, K, V):
             attn_scores = tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask)
             outs = attn_scores @ v
@@ -115,7 +116,7 @@ class Model(tf.keras.Model):
     Our take on the SATORI model!
     '''
 
-    def __init__(self, seq_len):
+    def __init__(self, seq_len, num_channels, num_multi_attention_heads):
         '''
         Set up all necessary layers for model call step.
 
@@ -133,6 +134,8 @@ class Model(tf.keras.Model):
 
         self.num_convolutions = 1
         self.convolutions = []
+        self.num_channels = num_channels
+        self.num_mulit_attention_heads = num_multi_attention_heads
 
         self.seq_len = seq_len
 
@@ -155,7 +158,8 @@ class Model(tf.keras.Model):
             # essentially 1D, but the 20 and 5 are arbitrary hyperparameters 
             # (although the 20 param should match what we expect to be our 
             # motif lengths, at least for first conv layer)
-            self.convolutions.append(tf.keras.layers.Convolution2D(8, (4, 15), (1, 1), padding="VALID"))
+            self.convolutions.append(tf.keras.layers.Convolution2D(num_channels, (4, 15), (1, 1), padding="VALID"))
+            # for promoters, do 8 channels with filter size 15
 
         # arbitrary second conv
         # self.convolutions.append(tf.keras.layers.Convolution2D(1, (4, 7), (1, 1), padding="SAME"))
@@ -169,7 +173,7 @@ class Model(tf.keras.Model):
         # 30 is an arbitrary hyperparam here, feel free to change
         # changed to 96 for the real data
         # 5 is also arbitrary (num of heads)
-        self.self_attns.append(SelfAttn(8, 8, 2))
+        self.self_attns.append(SelfAttn(self.num_channels, self.num_channels, self.num_mulit_attention_heads, self.conv_out_shape))
         # for _ in range(self.num_self_attns):
         #     self.self_attns.append(SelfAttn(57, 57, 5))
 
@@ -201,9 +205,6 @@ class Model(tf.keras.Model):
         Resulting enhancer label distribution
         '''
 
-        print("inputs: ", inputs)
-        # the shape is (11654, 499)
-
         x = tf.one_hot(inputs, 4, axis=1)
 
         # adding "channel" for conv2D,
@@ -212,14 +213,13 @@ class Model(tf.keras.Model):
         for conv in self.convolutions:
             x = conv(x)
 
-        # print(x)
         # removing "channel" for conv2D
-        x = tf.reshape(x, (-1, self.conv_out_shape, 8))
+        x = tf.reshape(x, (-1, self.conv_out_shape, self.num_channels))
 
         # LD: add biLSTM here
         # self.bidirectional_lstm(x)
 
-        x = x + positional_encoding(self.conv_out_shape, 8)
+        x = x + positional_encoding(self.conv_out_shape, self.num_channels)
 
         for self_attn in self.self_attns:
             x, pAttn_concat = self_attn(x)  # don't need attention scores here 
@@ -265,7 +265,10 @@ def positional_encoding(length, depth):
 if __name__ == '__main__':
 
     # sequence length 300 is arbitrary here
-    model = Model(300)
+    seq_len = 300
+    num_channels = 8
+    num_multi_attention_heads = 2
+    model = Model(seq_len, num_channels, num_multi_attention_heads)
 
     if len(sys.argv) > 1 and sys.argv[1] == '--simulate':
         sim_data = DataSimulator()
@@ -376,7 +379,7 @@ if __name__ == '__main__':
     history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
     # model.show_figures(history.history)
 
-    model.save("model_promoters_nolstm.hd5")
+    model.save("model_promoters.hd5")
 
     # model.show_figures(history.history)
     # testing
