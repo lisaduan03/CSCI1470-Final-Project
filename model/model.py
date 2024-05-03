@@ -271,6 +271,8 @@ if __name__ == '__main__':
     model = Model(seq_len, num_channels, num_multi_attention_heads)
 
     if len(sys.argv) > 1 and sys.argv[1] == '--simulate':
+        tf.random.set_seed(0)
+        random.seed(0)
         sim_data = DataSimulator("PWM")
 
         # motifs also arbitrary, maybe try pushing up to match convolution length 
