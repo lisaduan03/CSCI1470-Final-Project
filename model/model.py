@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt
 
 
 
-
 NUM_EPOCHS = 10 # LD changed to see if real data would train
 BATCH_SZ = 32
 
@@ -156,7 +155,7 @@ class Model(tf.keras.Model):
             # essentially 1D, but the 20 and 5 are arbitrary hyperparameters 
             # (although the 20 param should match what we expect to be our 
             # motif lengths, at least for first conv layer)
-            self.convolutions.append(tf.keras.layers.Convolution2D(7, (4, 15), (1, 1), padding="VALID"))
+            self.convolutions.append(tf.keras.layers.Convolution2D(8, (4, 15), (1, 1), padding="VALID"))
 
         # arbitrary second conv
         # self.convolutions.append(tf.keras.layers.Convolution2D(1, (4, 7), (1, 1), padding="SAME"))
@@ -170,7 +169,7 @@ class Model(tf.keras.Model):
         # 30 is an arbitrary hyperparam here, feel free to change
         # changed to 96 for the real data
         # 5 is also arbitrary (num of heads)
-        self.self_attns.append(SelfAttn(7, 7, 2))
+        self.self_attns.append(SelfAttn(8, 8, 2))
         # for _ in range(self.num_self_attns):
         #     self.self_attns.append(SelfAttn(57, 57, 5))
 
@@ -215,10 +214,12 @@ class Model(tf.keras.Model):
 
         # print(x)
         # removing "channel" for conv2D
-        x = tf.reshape(x, (-1, self.conv_out_shape, 7))
+        x = tf.reshape(x, (-1, self.conv_out_shape, 8))
 
         # LD: add biLSTM here
         # self.bidirectional_lstm(x)
+
+        x = x + positional_encoding(self.conv_out_shape, 8)
 
         for self_attn in self.self_attns:
             x, pAttn_concat = self_attn(x)  # don't need attention scores here 
