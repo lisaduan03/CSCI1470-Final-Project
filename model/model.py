@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 
 
-NUM_EPOCHS = 10 # LD changed to see if real data would train
+NUM_EPOCHS = 15 # LD changed to see if real data would train
 BATCH_SZ = 32
 
 # add more weight to positives in BCE loss
@@ -271,15 +271,18 @@ if __name__ == '__main__':
     model = Model(seq_len, num_channels, num_multi_attention_heads)
 
     if len(sys.argv) > 1 and sys.argv[1] == '--simulate':
-        sim_data = DataSimulator()
+        sim_data = DataSimulator("PWM")
 
         # motifs also arbitrary, maybe try pushing up to match convolution length 
         # dim of 20
-        # sim_data.add_interactions([('AAAAAAAA', 'CCCCCCCC'), ('CCCCCCCC', 'TTTTTTTT')])
-        sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('GTAGTCCGTCCCGTA', 'ATCGACGTAGCTAGC'), ('ATCGACGTAGCTAGC', 'CGATTCTAGCTAGCA')])
+        ttk = np.loadtxt('simulated_results/ttk.txt')
+        clamp = np.loadtxt('simulated_results/clamp.txt')
+        neo = np.loadtxt('simulated_results/neo38.txt')
+        deaf = np.loadtxt('simulated_results/deaf1.txt')
+        sim_data.add_interactions([(('ttk', ttk), ('clamp', clamp)), (('ttk', ttk), ('neo', neo)), (('neo', neo), ('deaf', deaf))])
 
         # rest should be fairly self explanatory here
-        pos, neg, pos_labels, neg_labels = sim_data.simulate(300, 5000, False)
+        pos, neg, pos_labels, neg_labels = sim_data.simulate(300, 50000, True)
 
         train_X = tf.concat([pos, neg], axis=0)
         train_y = tf.concat([pos_labels, neg_labels], axis=0)
@@ -287,7 +290,7 @@ if __name__ == '__main__':
         train_y = tf.one_hot(train_y,2)
 
         # testing
-        test_pos, test_neg, test_pos_labels, test_neg_labels = sim_data.simulate(300, BATCH_SZ, False)
+        test_pos, test_neg, test_pos_labels, test_neg_labels = sim_data.simulate(300, 1000, True)
 
         test_X = tf.concat([test_pos, test_neg], axis=0)
         test_y = tf.concat([test_pos_labels, test_neg_labels], axis=0)
@@ -379,7 +382,7 @@ if __name__ == '__main__':
     history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
     # model.show_figures(history.history)
 
-    model.save("model_promoters.hd5")
+    model.save("simulated_results/pwm_simple/model_promoters.hd5")
 
     # model.show_figures(history.history)
     # testing
@@ -389,9 +392,9 @@ if __name__ == '__main__':
     test_y = tf.gather(test_y, inds)
 
     import pickle as pkl
-    with open('test_X.pkl', 'wb') as f:
+    with open('simulated_results/pwm_simple/test_X.pkl', 'wb') as f:
         pkl.dump(test_X, f)
-    with open('test_y.pkl', 'wb') as f:
+    with open('simulated_results/pwm_simple/test_y.pkl', 'wb') as f:
         pkl.dump(test_y, f)
 
     print(model.test_on_batch(test_X, test_y))

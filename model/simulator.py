@@ -45,7 +45,7 @@ class DataSimulator():
     A class for simulating motif interaction data.
     '''
 
-    def __init__(self):
+    def __init__(self, mode : str):
         '''
         Initialize simulator class with an interaction graph
 
@@ -57,9 +57,12 @@ class DataSimulator():
         --------
         None
         '''
+        assert(mode in ['SEQ', 'PWM'])
         self.interaction_graph = nx.Graph()
+        self.mode = mode
+        self.pwm_dict = {}
 
-    def add_motif(self, motif : str):
+    def add_motif(self, motif):
         '''
         Add a motif to the interaction graph.
 
@@ -71,9 +74,13 @@ class DataSimulator():
         --------
         None
         '''
-        self.interaction_graph.add_node(motif)
+        if self.mode == 'PWM':
+            self.pwm_dict[motif[0]] = motif[1]
+            self.interaction_graph.add_node(motif[0])
+        else:
+            self.interaction_graph.add_node(motif)
     
-    def add_interaction(self, motif1 : str, motif2 : str):
+    def add_interaction(self, motif1, motif2):
         '''
         Add a motif interaction to the interaction graph.
 
@@ -86,9 +93,14 @@ class DataSimulator():
         --------
         None
         '''
-        self.interaction_graph.add_edge(motif1, motif2)
+        if self.mode == 'PWM':
+            self.pwm_dict[motif1[0]] = motif1[1]
+            self.pwm_dict[motif2[0]] = motif2[1]
+            self.interaction_graph.add_node(motif1[0], motif2[0])
+        else:
+            self.interaction_graph.add_edge(motif1, motif2)
     
-    def add_motifs(self, motifs : list[str]):
+    def add_motifs(self, motifs):
         '''
         Add multiple motifs to the interaction graph.
 
@@ -100,9 +112,14 @@ class DataSimulator():
         --------
         None
         '''
-        self.interaction_graph.add_nodes_from(motifs)
+        if self.mode == 'PWM':
+            for motif in motifs:
+                self.pwm_dict[motif[0]] = motif[1]
+                self.interaction_graph.add_node(motif[0])
+        else:
+            self.interaction_graph.add_nodes_from(motifs)
     
-    def add_interactions(self, motif_ints : list[tuple[str, str]]):
+    def add_interactions(self, motif_ints):
         '''
         Add multiple motif interaction pairs to the interaction graph.
 
@@ -114,7 +131,13 @@ class DataSimulator():
         --------
         None
         '''
-        self.interaction_graph.add_edges_from(motif_ints)
+        if self.mode == 'PWM':
+            for motif1, motif2 in motif_ints:
+                self.pwm_dict[motif1[0]] = motif1[1]
+                self.pwm_dict[motif2[0]] = motif2[1]
+                self.interaction_graph.add_edge(motif1[0], motif2[0])
+        else:
+            self.interaction_graph.add_edges_from(motif_ints)
 
     def sample_node_pair(self):
         '''
@@ -164,6 +187,14 @@ class DataSimulator():
         '''
         encoded_seq = [map_encode(x) for x in seqs]
         return tf.convert_to_tensor(encoded_seq)
+    
+    def sample_from_pwm(self, name):
+        running_samp = ''
+        weights = self.pwm_dict[name]
+        for i in range(len(weights[0])):
+            running_samp += random.choices(['A', 'C', 'G', 'T'], weights=weights[:, i])[0]
+        return running_samp
+
 
     def simulate(self, seq_lens : int, num_seqs : int, undir : bool):
         '''
@@ -189,22 +220,26 @@ class DataSimulator():
 
         # for each pair of interacting motifs
         for motif1, motif2 in self.interaction_graph.edges():
+            len_motif1, len_motif2 = len(self.pwm_dict[motif1][0]), len(self.pwm_dict[motif2][0])
             # generate a proportional number of positive sequences
             for _ in range((num_seqs // 2) // num_ints):
                 # randomly shuffle motifs (undirected edge model)
-                assert(seq_lens - len(motif1) - len(motif2) > 0)
-                m1 = motif1
-                m2 = motif2
+                assert(seq_lens - len_motif1 - len_motif2 > 0)
+                m1, m2 = motif1, motif2
+                lm1, lm2 = len_motif1, len_motif2
                 if undir and (random.choice([0, 1]) == 1):
-                    m2 = motif1
-                    m1 = motif2   
+                    m1, m2 = motif2, motif1
+                    lm1, lm2 = len_motif2, len_motif1
                 
                 # choose positions in the new sequence at which to place both 
                 # motifs
-                start1 = random.randint(0, seq_lens - (len(m1) + len(m2)) - 1)
-                start2 = random.randint(start1 + len(m1), seq_lens - len(m2))
+                start1 = random.randint(0, seq_lens - (lm1 + lm2) - 1)
+                start2 = random.randint(start1 + lm1, seq_lens - lm2)
             
                 # fill in the gaps with negative sequence data
+                if self.mode == "PWM":
+                    m1 = self.sample_from_pwm(m1)
+                    m2 = self.sample_from_pwm(m2)
                 pos_data.append(self.gen_neg(start1) + m1 + self.gen_neg(start2 - start1 - len(m1)) + m2 + self.gen_neg(seq_lens - start2 - len(m2)))
         
         neg_data = []
@@ -223,15 +258,21 @@ class DataSimulator():
             while (motif1, motif2) in [x for x in self.interaction_graph.edges()]:
                 motif1, motif2 = self.sample_node_pair()
 
+            len_motif1, len_motif2 = len(self.pwm_dict[motif1][0]), len(self.pwm_dict[motif2][0])
+
             # same as for positive motif pair
-            m1 = motif1
-            m2 = motif2
+            m1, m2 = motif1, motif2
+            lm1, lm2 = len_motif1, len_motif2
             if undir and (random.choice([0, 1]) == 1):
-                m2 = motif1
-                m1 = motif2   
-            start1 = random.randint(0, seq_lens - (len(m1) + len(m2)) - 1)
-            start2 = random.randint(start1 + len(m1), seq_lens - len(m2))
+                m1, m2 = motif2, motif1
+                lm1, lm2 = len_motif2, len_motif1 
+
+            start1 = random.randint(0, seq_lens - (lm1 + lm2) - 1)
+            start2 = random.randint(start1 + lm1, seq_lens - lm2)
         
+            if self.mode == "PWM":
+                m1 = self.sample_from_pwm(m1)
+                m2 = self.sample_from_pwm(m2)
             neg_data.append(self.gen_neg(start1) + m1 + self.gen_neg(start2 - start1 - len(m1)) + m2 + self.gen_neg(seq_lens - start2 - len(m2)))
             
         return self.seqs_to_tens(pos_data), self.seqs_to_tens(neg_data), tf.ones(len(pos_data), dtype=tf.uint8), tf.zeros(len(neg_data), dtype=tf.uint8)

@@ -1,0 +1,122 @@
+
+Simple graph
+sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('GTAGTCCGTCCCGTA', 'ATCGACGTAGCTAGC'), ('ATCGACGTAGCTAGC', 'CGATTCTAGCTAGCA')])
+
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (19.9,-19.1) circle (3);
+\draw (19.9,-19.1) node {$s1$};
+\draw [black] (32.6,-13.1) circle (3);
+\draw (32.6,-13.1) node {$s2$};
+\draw [black] (32.2,-23.6) circle (3);
+\draw (32.2,-23.6) node {$s3$};
+\draw [black] (43.5,-23.6) circle (3);
+\draw (43.5,-23.6) node {$s4$};
+\draw [black] (22.61,-17.82) -- (29.89,-14.38);
+\fill [black] (29.89,-14.38) -- (28.95,-14.27) -- (29.38,-15.18);
+\draw [black] (22.72,-20.13) -- (29.38,-22.57);
+\fill [black] (29.38,-22.57) -- (28.8,-21.82) -- (28.46,-22.76);
+\draw [black] (35.2,-23.6) -- (40.5,-23.6);
+\fill [black] (40.5,-23.6) -- (39.7,-23.1) -- (39.7,-24.1);
+\end{tikzpicture}
+\end{center}
+
+Two disconnected components (check self attn, SET UNDIR=TRUE, can make motifs less "random looking" if performance is terrible)
+sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('ATCGACGTAGCTAGC', 'GTAGTCCGTCCCGTA'), ('TTAGTCAGTCGATCA', 'ATCGACGTAGCTAGC'), ('CTCAGCTCTATTTTA', 'GTGGTCATGGGTTTT'), ('GTGGTCATGGGTTTT', 'GGTCCGCCCGAGCGG'), ('GGTCCGCCCGAGCGG', 'CTCAGCTCTATTTTA')])
+
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (21.3,-23.6) circle (3);
+\draw (21.3,-23.6) node {$s1$};
+\draw [black] (27.6,-12.9) circle (3);
+\draw (27.6,-12.9) node {$s2$};
+\draw [black] (34.8,-23.6) circle (3);
+\draw (34.8,-23.6) node {$s3$};
+\draw [black] (47.1,-23.7) circle (3);
+\draw (47.1,-23.7) node {$s4$};
+\draw [black] (52.8,-12.9) circle (3);
+\draw (52.8,-12.9) node {$s5$};
+\draw [black] (59.4,-23.7) circle (3);
+\draw (59.4,-23.7) node {$s6$};
+\draw [black] (21.867,-20.66) arc (163.11481:135.90731:14.4);
+\fill [black] (25.3,-14.82) -- (24.39,-15.05) -- (25.11,-15.74);
+\draw [black] (24.097,-22.529) arc (105.24103:74.75897:15.038);
+\fill [black] (32,-22.53) -- (31.36,-21.84) -- (31.1,-22.8);
+\draw [black] (27.069,-15.847) arc (-16.3841:-44.59378:13.95);
+\fill [black] (23.62,-21.71) -- (24.54,-21.49) -- (23.82,-20.79);
+\draw [black] (31.868,-24.225) arc (-81.34704:-98.65296:25.375);
+\fill [black] (24.23,-24.23) -- (24.95,-24.84) -- (25.1,-23.85);
+\draw [black] (30.175,-14.424) arc (52.19293:15.68007:11.959);
+\fill [black] (34.36,-20.64) -- (34.62,-19.74) -- (33.66,-20.01);
+\draw [black] (32.55,-21.62) arc (-135.7019:-156.4251:19.736);
+\fill [black] (28.59,-15.73) -- (28.45,-16.66) -- (29.36,-16.26);
+\draw [black] (47.278,-20.714) arc (-190.83361:-224.81458:11.573);
+\fill [black] (50.43,-14.73) -- (49.52,-14.95) -- (50.23,-15.65);
+\draw [black] (55.245,-14.626) arc (47.95135:14.90778:12.591);
+\fill [black] (58.98,-20.74) -- (59.26,-19.84) -- (58.29,-20.09);
+\draw [black] (56.614,-24.795) arc (-75.10987:-104.89013:13.091);
+\fill [black] (49.89,-24.79) -- (50.53,-25.48) -- (50.79,-24.52);
+\draw [black] (49.921,-22.695) arc (103.55177:76.44823:14.207);
+\fill [black] (56.58,-22.7) -- (55.92,-22.02) -- (55.68,-22.99);
+\draw [black] (57.07,-21.819) arc (-134.75553:-162.38534:14.693);
+\fill [black] (53.41,-15.83) -- (53.18,-16.75) -- (54.13,-16.44);
+\draw [black] (52.336,-15.859) arc (-14.81687:-40.83133:14.542);
+\fill [black] (49.28,-21.65) -- (50.18,-21.37) -- (49.43,-20.72);
+\end{tikzpicture}
+\end{center}
+
+Two components connected by 1 edg (check self attn, SET UNDIR=TRUE, can make motifs less "random looking" if performance is terrible)
+sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('ATCGACGTAGCTAGC', 'GTAGTCCGTCCCGTA'), ('TTAGTCAGTCGATCA', 'ATCGACGTAGCTAGC'), ('CTCAGCTCTATTTTA', 'GTGGTCATGGGTTTT'), ('GTGGTCATGGGTTTT', 'GGTCCGCCCGAGCGG'), ('GGTCCGCCCGAGCGG', 'CTCAGCTCTATTTTA'), ('GTAGTCCGTCCCGTA', 'CTCAGCTCTATTTTA'), ('CTCAGCTCTATTTTA', 'GTAGTCCGTCCCGTA')])
+
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (21.3,-23.6) circle (3);
+\draw (21.3,-23.6) node {$s1$};
+\draw [black] (27.6,-12.9) circle (3);
+\draw (27.6,-12.9) node {$s2$};
+\draw [black] (34.8,-23.6) circle (3);
+\draw (34.8,-23.6) node {$s3$};
+\draw [black] (47.1,-23.7) circle (3);
+\draw (47.1,-23.7) node {$s4$};
+\draw [black] (52.8,-12.9) circle (3);
+\draw (52.8,-12.9) node {$s5$};
+\draw [black] (59.4,-23.7) circle (3);
+\draw (59.4,-23.7) node {$s6$};
+\draw [black] (21.867,-20.66) arc (163.11481:135.90731:14.4);
+\fill [black] (25.3,-14.82) -- (24.39,-15.05) -- (25.11,-15.74);
+\draw [black] (24.097,-22.529) arc (105.24103:74.75897:15.038);
+\fill [black] (32,-22.53) -- (31.36,-21.84) -- (31.1,-22.8);
+\draw [black] (27.069,-15.847) arc (-16.3841:-44.59378:13.95);
+\fill [black] (23.62,-21.71) -- (24.54,-21.49) -- (23.82,-20.79);
+\draw [black] (31.868,-24.225) arc (-81.34704:-98.65296:25.375);
+\fill [black] (24.23,-24.23) -- (24.95,-24.84) -- (25.1,-23.85);
+\draw [black] (30.175,-14.424) arc (52.19293:15.68007:11.959);
+\fill [black] (34.36,-20.64) -- (34.62,-19.74) -- (33.66,-20.01);
+\draw [black] (32.55,-21.62) arc (-135.7019:-156.4251:19.736);
+\fill [black] (28.59,-15.73) -- (28.45,-16.66) -- (29.36,-16.26);
+\draw [black] (47.278,-20.714) arc (-190.83361:-224.81458:11.573);
+\fill [black] (50.43,-14.73) -- (49.52,-14.95) -- (50.23,-15.65);
+\draw [black] (55.245,-14.626) arc (47.95135:14.90778:12.591);
+\fill [black] (58.98,-20.74) -- (59.26,-19.84) -- (58.29,-20.09);
+\draw [black] (56.614,-24.795) arc (-75.10987:-104.89013:13.091);
+\fill [black] (49.89,-24.79) -- (50.53,-25.48) -- (50.79,-24.52);
+\draw [black] (49.921,-22.695) arc (103.55177:76.44823:14.207);
+\fill [black] (56.58,-22.7) -- (55.92,-22.02) -- (55.68,-22.99);
+\draw [black] (57.07,-21.819) arc (-134.75553:-162.38534:14.693);
+\fill [black] (53.41,-15.83) -- (53.18,-16.75) -- (54.13,-16.44);
+\draw [black] (52.336,-15.859) arc (-14.81687:-40.83133:14.542);
+\fill [black] (49.28,-21.65) -- (50.18,-21.37) -- (49.43,-20.72);
+\draw [black] (37.463,-22.24) arc (108.90572:70.16266:10.548);
+\fill [black] (44.46,-22.3) -- (43.88,-21.56) -- (43.54,-22.5);
+\draw [black] (44.345,-24.868) arc (-74.13321:-106.79841:12.107);
+\fill [black] (37.54,-24.81) -- (38.16,-25.52) -- (38.45,-24.56);
+\end{tikzpicture}
+\end{center}
+
+** Add support for random noise applied to motifs before introduction? To 
+simulate variable PWMs
+
+Only other extensions that make sense to me are more than 2 disconnected components...
