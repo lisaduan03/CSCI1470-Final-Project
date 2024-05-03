@@ -276,7 +276,7 @@ if __name__ == '__main__':
         sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('GTAGTCCGTCCCGTA', 'ATCGACGTAGCTAGC'), ('ATCGACGTAGCTAGC', 'CGATTCTAGCTAGCA')])
 
         # rest should be fairly self explanatory here
-        pos, neg, pos_labels, neg_labels = sim_data.simulate(150, 5000, False)
+        pos, neg, pos_labels, neg_labels = sim_data.simulate(300, 5000, False)
 
         train_X = tf.concat([pos, neg], axis=0)
         train_y = tf.concat([pos_labels, neg_labels], axis=0)
