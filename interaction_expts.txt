@@ -1,5 +1,5 @@
 
-Simple graph
+Simple graph (0.9972)
 sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('GTAGTCCGTCCCGTA', 'ATCGACGTAGCTAGC'), ('ATCGACGTAGCTAGC', 'CGATTCTAGCTAGCA')])
 
 \begin{center}
@@ -22,7 +22,7 @@ sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('GTAGTCCGTCC
 \end{tikzpicture}
 \end{center}
 
-Two disconnected components (check self attn, SET UNDIR=TRUE, can make motifs less "random looking" if performance is terrible)
+Two disconnected components (check self attn, SET UNDIR=TRUE, can make motifs less "random looking" if performance is terrible), (0.9565)
 sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('ATCGACGTAGCTAGC', 'GTAGTCCGTCCCGTA'), ('TTAGTCAGTCGATCA', 'ATCGACGTAGCTAGC'), ('CTCAGCTCTATTTTA', 'GTGGTCATGGGTTTT'), ('GTGGTCATGGGTTTT', 'GGTCCGCCCGAGCGG'), ('GGTCCGCCCGAGCGG', 'CTCAGCTCTATTTTA')])
 
 \begin{center}
@@ -67,7 +67,7 @@ sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('ATCGACGTAGC
 \end{tikzpicture}
 \end{center}
 
-Two components connected by 1 edg (check self attn, SET UNDIR=TRUE, can make motifs less "random looking" if performance is terrible)
+Two components connected by 1 edg (check self attn, SET UNDIR=TRUE, can make motifs less "random looking" if performance is terrible), (0.9329)
 sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('ATCGACGTAGCTAGC', 'GTAGTCCGTCCCGTA'), ('TTAGTCAGTCGATCA', 'ATCGACGTAGCTAGC'), ('CTCAGCTCTATTTTA', 'GTGGTCATGGGTTTT'), ('GTGGTCATGGGTTTT', 'GGTCCGCCCGAGCGG'), ('GGTCCGCCCGAGCGG', 'CTCAGCTCTATTTTA'), ('GTAGTCCGTCCCGTA', 'CTCAGCTCTATTTTA'), ('CTCAGCTCTATTTTA', 'GTAGTCCGTCCCGTA')])
 
 \begin{center}
@@ -120,3 +120,12 @@ sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('ATCGACGTAGC
 simulate variable PWMs
 
 Only other extensions that make sense to me are more than 2 disconnected components...
+
+PWM same graph as simple, but with PWMs undirected => 0.8819
+PWM same graph as simple, but with PWMs undirected, w/o => 0.8865
+PWM same graph as simple, directed => 0.9366
+PWM same graph as simple, directed w/o pos => 0.9403
+
+ttk -> clamp
+ttk -> neo
+neo -> deaf

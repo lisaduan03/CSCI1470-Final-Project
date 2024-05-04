@@ -220,7 +220,10 @@ class DataSimulator():
 
         # for each pair of interacting motifs
         for motif1, motif2 in self.interaction_graph.edges():
-            len_motif1, len_motif2 = len(self.pwm_dict[motif1][0]), len(self.pwm_dict[motif2][0])
+            if self.mode == 'PWM':
+                len_motif1, len_motif2 = len(self.pwm_dict[motif1][0]), len(self.pwm_dict[motif2][0])
+            else:
+                len_motif1, len_motif2 = len(motif1), len(motif2)
             # generate a proportional number of positive sequences
             for _ in range((num_seqs // 2) // num_ints):
                 # randomly shuffle motifs (undirected edge model)
@@ -258,7 +261,10 @@ class DataSimulator():
             while (motif1, motif2) in [x for x in self.interaction_graph.edges()]:
                 motif1, motif2 = self.sample_node_pair()
 
-            len_motif1, len_motif2 = len(self.pwm_dict[motif1][0]), len(self.pwm_dict[motif2][0])
+            if self.mode == 'PWM':
+                len_motif1, len_motif2 = len(self.pwm_dict[motif1][0]), len(self.pwm_dict[motif2][0])
+            else:
+                len_motif1, len_motif2 = len(motif1), len(motif2)
 
             # same as for positive motif pair
             m1, m2 = motif1, motif2

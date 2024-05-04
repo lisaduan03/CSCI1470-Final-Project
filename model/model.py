@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 
 
-NUM_EPOCHS = 10 # LD changed to see if real data would train
+NUM_EPOCHS = 15 # LD changed to see if real data would train
 BATCH_SZ = 32
 
 # add more weight to positives in BCE loss
@@ -219,7 +219,7 @@ class Model(tf.keras.Model):
         # LD: add biLSTM here
         # self.bidirectional_lstm(x)
 
-        x = x + positional_encoding(self.conv_out_shape, self.num_channels)
+        # x = x + positional_encoding(self.conv_out_shape, self.num_channels)
 
         for self_attn in self.self_attns:
             x, pAttn_concat = self_attn(x)  # don't need attention scores here 
@@ -273,7 +273,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == '--simulate':
         tf.random.set_seed(0)
         random.seed(0)
-        sim_data = DataSimulator("PWM")
+        sim_data = DataSimulator("SEQ")
 
         # motifs also arbitrary, maybe try pushing up to match convolution length 
         # dim of 20
@@ -281,11 +281,11 @@ if __name__ == '__main__':
         # clamp = np.loadtxt('simulated_results/clamp.txt')
         # neo = np.loadtxt('simulated_results/neo38.txt')
         # deaf = np.loadtxt('simulated_results/deaf1.txt')
-        clamp = np.transpose(np.genfromtxt('simulated_results/clamp_meme.txt', delimiter = '        '))
-        ttk = np.transpose(np.genfromtxt('simulated_results/ttk_meme.txt', delimiter = '        '))
-        neo = np.transpose(np.genfromtxt('simulated_results/neo38_meme.txt', delimiter = '        '))
-        deaf = np.transpose(np.genfromtxt('simulated_results/deaf1_meme.txt', delimiter = '        '))
-        sim_data.add_interactions([(('ttk', ttk), ('clamp', clamp)), (('ttk', ttk), ('neo', neo)), (('neo', neo), ('deaf', deaf))])
+        clamp = np.transpose(np.genfromtxt('simulated_results/clamp_meme.txt'))
+        ttk = np.transpose(np.genfromtxt('simulated_results/ttk_meme.txt'))
+        neo = np.transpose(np.genfromtxt('simulated_results/neo38_meme.txt'))
+        deaf = np.transpose(np.genfromtxt('simulated_results/deaf1_meme.txt'))
+        sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('ATCGACGTAGCTAGC', 'GTAGTCCGTCCCGTA'), ('TTAGTCAGTCGATCA', 'ATCGACGTAGCTAGC'), ('CTCAGCTCTATTTTA', 'GTGGTCATGGGTTTT'), ('GTGGTCATGGGTTTT', 'GGTCCGCCCGAGCGG'), ('GGTCCGCCCGAGCGG', 'CTCAGCTCTATTTTA'), ('GTAGTCCGTCCCGTA', 'CTCAGCTCTATTTTA'), ('CTCAGCTCTATTTTA', 'GTAGTCCGTCCCGTA')])
 
         # rest should be fairly self explanatory here
         pos, neg, pos_labels, neg_labels = sim_data.simulate(300, 50000, True)
@@ -387,7 +387,7 @@ if __name__ == '__main__':
     history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
     # model.show_figures(history.history)
 
-    model.save("simulated_results/pwm_directed/model_promoters.hd5")
+    model.save("simulated_results/slightly_connected/model_promoters.hd5")
 
     # model.show_figures(history.history)
     # testing
@@ -397,9 +397,9 @@ if __name__ == '__main__':
     test_y = tf.gather(test_y, inds)
 
     import pickle as pkl
-    with open('simulated_results/pwm_directed/test_X.pkl', 'wb') as f:
+    with open('simulated_results/slightly_connected/test_X.pkl', 'wb') as f:
         pkl.dump(test_X, f)
-    with open('simulated_results/pwm_directed/test_y.pkl', 'wb') as f:
+    with open('simulated_results/slightly_connected/test_y.pkl', 'wb') as f:
         pkl.dump(test_y, f)
 
     print(model.test_on_batch(test_X, test_y))
