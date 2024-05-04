@@ -1,11 +1,11 @@
-2024-05-04 11:25:28.609092: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2024-05-04 11:25:28.612718: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
-2024-05-04 11:25:28.655111: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
-2024-05-04 11:25:28.655158: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
-2024-05-04 11:25:28.656589: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
-2024-05-04 11:25:28.663599: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+2024-05-04 15:39:02.548370: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-05-04 15:39:02.551814: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2024-05-04 15:39:02.592575: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2024-05-04 15:39:02.592632: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2024-05-04 15:39:02.593892: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-05-04 15:39:02.600256: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
 To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-05-04 11:25:30.201231: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2024-05-04 15:39:04.134858: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
 /bin/sh: line 1: weblogo: command not found
 /bin/sh: line 1: weblogo: command not found
 /bin/sh: line 1: weblogo: command not found
@@ -14,49 +14,56 @@ To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other ope
 /bin/sh: line 1: weblogo: command not found
 /bin/sh: line 1: weblogo: command not found
 /bin/sh: line 1: weblogo: command not found
-Writing results to output directory '/users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/slightly_connected/Motif_Analysis/tomtom'.
-Processing query 1 out of 7 
+The output directory '/users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/slightly_connected/Motif_Analysis/tomtom' already exists.
+Its contents will be overwritten.
+Processing query 1 out of 8 
 # Computing q-values.
 #   Estimating pi_0 from all 1314 observed p-values.
 #   Estimating pi_0.
-# Minimal pi_zero = 1.00503
+# Minimal pi_zero = 1.00426
 #   Estimated pi_0=1
-Processing query 2 out of 7 
+Processing query 2 out of 8 
 # Computing q-values.
 #   Estimating pi_0 from all 1314 observed p-values.
 #   Estimating pi_0.
-# Minimal pi_zero = 0.996612
-#   Estimated pi_0=0.996612
-Processing query 3 out of 7 
+# Minimal pi_zero = 1.00426
+#   Estimated pi_0=1
+Processing query 3 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 0.991652
+#   Estimated pi_0=0.991652
+Processing query 4 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.0035
+#   Estimated pi_0=1
+Processing query 5 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00426
+#   Estimated pi_0=1
+Processing query 6 out of 8 
 # Computing q-values.
 #   Estimating pi_0 from all 1314 observed p-values.
 #   Estimating pi_0.
 # Minimal pi_zero = 1.00044
 #   Estimated pi_0=1
-Processing query 4 out of 7 
+Processing query 7 out of 8 
 # Computing q-values.
 #   Estimating pi_0 from all 1314 observed p-values.
 #   Estimating pi_0.
-# Minimal pi_zero = 0.998906
-#   Estimated pi_0=0.998906
-Processing query 5 out of 7 
-# Computing q-values.
-#   Estimating pi_0 from all 1314 observed p-values.
-#   Estimating pi_0.
-# Minimal pi_zero = 0.99242
-#   Estimated pi_0=0.99242
-Processing query 6 out of 7 
-# Computing q-values.
-#   Estimating pi_0 from all 1314 observed p-values.
-#   Estimating pi_0.
-# Minimal pi_zero = 1.00503
+# Minimal pi_zero = 1.0035
 #   Estimated pi_0=1
-Processing query 7 out of 7 
+Processing query 8 out of 8 
 # Computing q-values.
 #   Estimating pi_0 from all 1314 observed p-values.
 #   Estimating pi_0.
-# Minimal pi_zero = 1.0012
-#   Estimated pi_0=1
+# Minimal pi_zero = 0.997033
+#   Estimated pi_0=0.999671
 satori/extract_motifs_mine.py:600: UserWarning: 
 
 `distplot` is a deprecated function and will be removed in seaborn v0.14.0.
@@ -157,49 +164,56 @@ https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
 /bin/sh: line 1: weblogo: command not found
 /bin/sh: line 1: weblogo: command not found
 /bin/sh: line 1: weblogo: command not found
-Writing results to output directory '/users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/slightly_connected/Motif_Analysis_Negative/tomtom'.
-Processing query 1 out of 7 
+The output directory '/users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/slightly_connected/Motif_Analysis_Negative/tomtom' already exists.
+Its contents will be overwritten.
+Processing query 1 out of 8 
 # Computing q-values.
 #   Estimating pi_0 from all 1314 observed p-values.
 #   Estimating pi_0.
 # Minimal pi_zero = 1.00503
 #   Estimated pi_0=1
-Processing query 2 out of 7 
+Processing query 2 out of 8 
 # Computing q-values.
 #   Estimating pi_0 from all 1314 observed p-values.
 #   Estimating pi_0.
-# Minimal pi_zero = 1.0035
+# Minimal pi_zero = 1.00426
 #   Estimated pi_0=1
-Processing query 3 out of 7 
+Processing query 3 out of 8 
 # Computing q-values.
 #   Estimating pi_0 from all 1314 observed p-values.
 #   Estimating pi_0.
-# Minimal pi_zero = 1.0012
+# Minimal pi_zero = 0.99598
+#   Estimated pi_0=0.998906
+Processing query 4 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00197
 #   Estimated pi_0=1
-Processing query 4 out of 7 
-# Computing q-values.
-#   Estimating pi_0 from all 1314 observed p-values.
-#   Estimating pi_0.
-# Minimal pi_zero = 0.997377
-#   Estimated pi_0=0.997377
-Processing query 5 out of 7 
-# Computing q-values.
-#   Estimating pi_0 from all 1314 observed p-values.
-#   Estimating pi_0.
-# Minimal pi_zero = 0.989346
-#   Estimated pi_0=0.989346
-Processing query 6 out of 7 
+Processing query 5 out of 8 
 # Computing q-values.
 #   Estimating pi_0 from all 1314 observed p-values.
 #   Estimating pi_0.
 # Minimal pi_zero = 1.00503
 #   Estimated pi_0=1
-Processing query 7 out of 7 
+Processing query 6 out of 8 
 # Computing q-values.
 #   Estimating pi_0 from all 1314 observed p-values.
 #   Estimating pi_0.
-# Minimal pi_zero = 0.99857
-#   Estimated pi_0=0.999671
+# Minimal pi_zero = 1.00426
+#   Estimated pi_0=1
+Processing query 7 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00395
+#   Estimated pi_0=1
+Processing query 8 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00044
+#   Estimated pi_0=1
 satori/extract_motifs_mine.py:600: UserWarning: 
 
 `distplot` is a deprecated function and will be removed in seaborn v0.14.0.

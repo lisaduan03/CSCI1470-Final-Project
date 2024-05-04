@@ -1,0 +1,1061 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1901517
+##  Job Name : satori
+##  Nodelist : node1743
+##      CPUs : 15
+##  Mem/Node : 30720 MB
+## Directory : /oscar/home/jcurrie2/satori
+##   Job Started : Sat May  4 03:33:48 PM EDT 2024
+###############################################################################
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+(128, 55, 55)
+(128, 55, 55)
+(128, 55, 110)
+  1/313 [..............................] - ETA: 3:24 - loss: 0.3414 - auc: 0.9351 - val_auc: 0.9351 21/313 [=>............................] - ETA: 0s - loss: 0.4360 - auc: 0.9066 - val_auc: 0.9066   46/313 [===>..........................] - ETA: 0s - loss: 0.4713 - auc: 0.8973 - val_auc: 0.8973 71/313 [=====>........................] - ETA: 0s - loss: 0.4799 - auc: 0.8952 - val_auc: 0.8952 93/313 [=======>......................] - ETA: 0s - loss: 0.4725 - auc: 0.8978 - val_auc: 0.8978114/313 [=========>....................] - ETA: 0s - loss: 0.4809 - auc: 0.8952 - val_auc: 0.8952138/313 [============>.................] - ETA: 0s - loss: 0.4915 - auc: 0.8913 - val_auc: 0.8913161/313 [==============>...............] - ETA: 0s - loss: 0.4862 - auc: 0.8929 - val_auc: 0.8929182/313 [================>.............] - ETA: 0s - loss: 0.5011 - auc: 0.8881 - val_auc: 0.8881207/313 [==================>...........] - ETA: 0s - loss: 0.5068 - auc: 0.8866 - val_auc: 0.8866232/313 [=====================>........] - ETA: 0s - loss: 0.5040 - auc: 0.8871 - val_auc: 0.8871255/313 [=======================>......] - ETA: 0s - loss: 0.5063 - auc: 0.8861 - val_auc: 0.8861280/313 [=========================>....] - ETA: 0s - loss: 0.5077 - auc: 0.8856 - val_auc: 0.8856305/313 [============================>.] - ETA: 0s - loss: 0.5041 - auc: 0.8863 - val_auc: 0.8863313/313 [==============================] - 1s 2ms/step - loss: 0.5040 - auc: 0.8865 - val_auc: 0.8865
+num batches: 
+78
+Test Loss: 0.504 and AUC: 0.56 
+
+batch number:  1
+batch number:  2
+batch number:  3
+batch number:  4
+batch number:  5
+batch number:  6
+batch number:  7
+batch number:  8
+batch number:  9
+batch number:  10
+batch number:  11
+batch number:  12
+batch number:  13
+batch number:  14
+batch number:  15
+batch number:  16
+batch number:  17
+batch number:  18
+batch number:  19
+batch number:  20
+batch number:  21
+batch number:  22
+batch number:  23
+batch number:  24
+batch number:  25
+batch number:  26
+batch number:  27
+batch number:  28
+batch number:  29
+batch number:  30
+batch number:  31
+batch number:  32
+batch number:  33
+batch number:  34
+batch number:  35
+batch number:  36
+batch number:  37
+batch number:  38
+batch number:  39
+batch number:  40
+batch number:  41
+batch number:  42
+batch number:  43
+batch number:  44
+batch number:  45
+batch number:  46
+batch number:  47
+batch number:  48
+batch number:  49
+batch number:  50
+batch number:  51
+batch number:  52
+batch number:  53
+batch number:  54
+batch number:  55
+batch number:  56
+batch number:  57
+batch number:  58
+batch number:  59
+batch number:  60
+batch number:  61
+batch number:  62
+batch number:  63
+batch number:  64
+batch number:  65
+batch number:  66
+batch number:  67
+batch number:  68
+batch number:  69
+batch number:  70
+batch number:  71
+batch number:  72
+batch number:  73
+batch number:  74
+batch number:  75
+batch number:  76
+batch number:  77
+(8, 4, 15)
+plot motif fig /users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/pwm_simple_nopos/Motif_Analysis
+about to print filter outs
+(4746, 8, 286)
+Filter 0
+Filter 1
+Filter 2
+Filter 3
+Filter 4
+Filter 5
+Filter 6
+Filter 7
+/users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/pwm_simple_nopos/Motif_Analysis/tomtom/tomtom.txt /users/jcurrie2/data_koconno5/jcurrie2/MEME/fly_factor_survey_with_clamp.meme
+(4746, 286, 8)
+batch number:  1
+batch number:  2
+batch number:  3
+batch number:  4
+batch number:  5
+batch number:  6
+batch number:  7
+batch number:  8
+batch number:  9
+batch number:  10
+batch number:  11
+batch number:  12
+batch number:  13
+batch number:  14
+batch number:  15
+batch number:  16
+batch number:  17
+batch number:  18
+batch number:  19
+batch number:  20
+batch number:  21
+batch number:  22
+batch number:  23
+batch number:  24
+batch number:  25
+batch number:  26
+batch number:  27
+batch number:  28
+batch number:  29
+batch number:  30
+batch number:  31
+batch number:  32
+batch number:  33
+batch number:  34
+batch number:  35
+batch number:  36
+batch number:  37
+batch number:  38
+batch number:  39
+batch number:  40
+batch number:  41
+batch number:  42
+batch number:  43
+batch number:  44
+batch number:  45
+batch number:  46
+batch number:  47
+batch number:  48
+batch number:  49
+batch number:  50
+batch number:  51
+batch number:  52
+batch number:  53
+batch number:  54
+batch number:  55
+batch number:  56
+batch number:  57
+batch number:  58
+batch number:  59
+batch number:  60
+batch number:  61
+batch number:  62
+batch number:  63
+batch number:  64
+batch number:  65
+batch number:  66
+batch number:  67
+batch number:  68
+batch number:  69
+batch number:  70
+batch number:  71
+batch number:  72
+batch number:  73
+batch number:  74
+batch number:  75
+batch number:  76
+batch number:  77
+(8, 4, 15)
+plot motif fig /users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/pwm_simple_nopos/Motif_Analysis_Negative
+about to print filter outs
+(901, 8, 286)
+Filter 0
+Filter 1
+Filter 2
+Filter 3
+Filter 4
+Filter 5
+Filter 6
+Filter 7
+/users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/pwm_simple_nopos/Motif_Analysis_Negative/tomtom/tomtom.txt /users/jcurrie2/data_koconno5/jcurrie2/MEME/fly_factor_survey_with_clamp.meme
+(901, 286, 8)
+Annotating motifs...
+Positive and Negative Population:  4746 901
+outside for loop
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  0 Sequences Done:  70 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  1 Sequences Done:  132 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  2 Sequences Done:  186 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  3 Sequences Done:  243 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  4 Sequences Done:  303 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  5 Sequences Done:  377 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  6 Sequences Done:  440 Time Taken: 2 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  7 Sequences Done:  499 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  8 Sequences Done:  563 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  9 Sequences Done:  611 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  10 Sequences Done:  672 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  11 Sequences Done:  721 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  12 Sequences Done:  775 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  13 Sequences Done:  825 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  14 Sequences Done:  890 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  15 Sequences Done:  953 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  16 Sequences Done:  1018 Time Taken: 2 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  17 Sequences Done:  1090 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  18 Sequences Done:  1160 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  19 Sequences Done:  1222 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  20 Sequences Done:  1275 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  21 Sequences Done:  1331 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  22 Sequences Done:  1388 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  23 Sequences Done:  1437 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  24 Sequences Done:  1493 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  25 Sequences Done:  1558 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  26 Sequences Done:  1615 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  27 Sequences Done:  1685 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  28 Sequences Done:  1745 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  29 Sequences Done:  1810 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  30 Sequences Done:  1865 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  31 Sequences Done:  1928 Time Taken: 2 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  32 Sequences Done:  1993 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  33 Sequences Done:  2051 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  34 Sequences Done:  2105 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  35 Sequences Done:  2154 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  36 Sequences Done:  2216 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  37 Sequences Done:  2279 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  38 Sequences Done:  2332 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  39 Sequences Done:  2395 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  40 Sequences Done:  2451 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  41 Sequences Done:  2517 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  42 Sequences Done:  2584 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  43 Sequences Done:  2638 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  44 Sequences Done:  2699 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  45 Sequences Done:  2753 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  46 Sequences Done:  2818 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  47 Sequences Done:  2878 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  48 Sequences Done:  2937 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  49 Sequences Done:  3005 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  50 Sequences Done:  3063 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  51 Sequences Done:  3132 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  52 Sequences Done:  3189 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  53 Sequences Done:  3259 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  54 Sequences Done:  3324 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  55 Sequences Done:  3387 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  56 Sequences Done:  3455 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  57 Sequences Done:  3517 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  58 Sequences Done:  3587 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  59 Sequences Done:  3648 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  60 Sequences Done:  3709 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  61 Sequences Done:  3770 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  62 Sequences Done:  3833 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  63 Sequences Done:  3893 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  64 Sequences Done:  3950 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  65 Sequences Done:  4007 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  66 Sequences Done:  4072 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  67 Sequences Done:  4135 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  68 Sequences Done:  4184 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  69 Sequences Done:  4243 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  70 Sequences Done:  4316 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  71 Sequences Done:  4364 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  72 Sequences Done:  4436 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  73 Sequences Done:  4496 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  74 Sequences Done:  4558 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  75 Sequences Done:  4618 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  76 Sequences Done:  4675 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  77 Sequences Done:  4746 Time Taken: 1 seconds
+negative background set
+outside for loop
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  0 Sequences Done:  10 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  1 Sequences Done:  18 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  2 Sequences Done:  36 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  3 Sequences Done:  47 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  4 Sequences Done:  61 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  5 Sequences Done:  75 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  6 Sequences Done:  90 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  7 Sequences Done:  98 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  8 Sequences Done:  113 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  9 Sequences Done:  127 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  10 Sequences Done:  140 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  11 Sequences Done:  155 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  12 Sequences Done:  169 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  13 Sequences Done:  178 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  14 Sequences Done:  191 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  15 Sequences Done:  202 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  16 Sequences Done:  209 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  17 Sequences Done:  220 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  18 Sequences Done:  228 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  19 Sequences Done:  238 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  20 Sequences Done:  254 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  21 Sequences Done:  268 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  22 Sequences Done:  282 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  23 Sequences Done:  296 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  24 Sequences Done:  307 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  25 Sequences Done:  319 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  26 Sequences Done:  327 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  27 Sequences Done:  343 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  28 Sequences Done:  353 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  29 Sequences Done:  363 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  30 Sequences Done:  375 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  31 Sequences Done:  383 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  32 Sequences Done:  396 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  33 Sequences Done:  407 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  34 Sequences Done:  416 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  35 Sequences Done:  424 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  36 Sequences Done:  439 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  37 Sequences Done:  453 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  38 Sequences Done:  465 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  39 Sequences Done:  474 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  40 Sequences Done:  486 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  41 Sequences Done:  499 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  42 Sequences Done:  505 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  43 Sequences Done:  519 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  44 Sequences Done:  530 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  45 Sequences Done:  549 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  46 Sequences Done:  556 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  47 Sequences Done:  564 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  48 Sequences Done:  580 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  49 Sequences Done:  595 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  50 Sequences Done:  606 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  51 Sequences Done:  618 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  52 Sequences Done:  634 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  53 Sequences Done:  644 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  54 Sequences Done:  659 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  55 Sequences Done:  677 Time Taken: 1 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  56 Sequences Done:  690 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  57 Sequences Done:  699 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  58 Sequences Done:  705 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  59 Sequences Done:  719 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  60 Sequences Done:  729 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  61 Sequences Done:  737 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  62 Sequences Done:  747 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  63 Sequences Done:  758 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  64 Sequences Done:  764 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  65 Sequences Done:  772 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  66 Sequences Done:  788 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  67 Sequences Done:  798 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  68 Sequences Done:  810 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  69 Sequences Done:  822 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  70 Sequences Done:  832 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  71 Sequences Done:  847 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  72 Sequences Done:  852 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  73 Sequences Done:  864 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  74 Sequences Done:  872 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  75 Sequences Done:  879 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  76 Sequences Done:  889 Time Taken: 0 seconds
+inside for loop
+generating sequence position information...
+Done!
+Done for Batch:  77 Sequences Done:  901 Time Taken: 0 seconds
+Done for Attention Cutoff Value:  0.12
+Done for Attention Cutoff Value:  0.04

@@ -1,0 +1,9 @@
+               consensus  annotation     ic    mean     std
+0        TGCAGAGTATTCGAT   l(3)neo38  16.80  -1.1049  0.7679
+1        TACTCACGCGCCGTA           .  10.22  0.3673  0.4512
+2        TACATGTCCACAAGT      CG7368  19.22  0.2861  0.4669
+3        CGTGTTTGTTAGTCC           .   9.57  -0.0589  0.5664
+4        GTTGGTTCTGGGGTC           .  10.50  -0.5564  0.4089
+5        GCACACACGCGCACG           .  10.29  -0.0099  0.4682
+6        GAAGTGTGTAAGCGC       Clamp  16.93  -1.1406  0.7302
+7        CGTATGCCTCTTCAA         ttk  13.24  -1.5771  0.6555
