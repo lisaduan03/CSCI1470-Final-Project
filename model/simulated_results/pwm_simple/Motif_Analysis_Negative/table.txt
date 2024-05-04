@@ -1,0 +1,9 @@
+               consensus  annotation     ic    mean     std
+0        CTGATGTAAGTACGA     lola-PA  10.00  -0.5319  0.5801
+1        CGAAGAAGCAGCTTG           .  10.74  -0.8742  0.6222
+2        TTACGTCCTAACGAT  crol-F7-16  10.29  -1.3945  0.6718
+3        ACCCTTATACTGAAA           .   9.79  0.1872  0.5292
+4        GGGACCACCCCACGA         opa  10.27  -1.3405  0.4363
+5        TTTCATGACTCTTCC           .  10.06  -0.4442  0.5897
+6        GCTACAAGGTCTTTA           .  10.44  -0.5127  0.5978
+7        CGTGGTATTGTGGTG         ttk  11.56  -2.2636  0.7034

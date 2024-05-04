@@ -9,7 +9,7 @@ from torch.backends import cudnn
 
 #local imports
 from satori.experiment_mine import run_experiment, motif_analysis, get_results_for_shuffled
-from satori.process_attention import infer_intr_attention
+from satori.process_attention_mine import infer_intr_attention
 # from satori.process_fis import infer_intr_FIS
 from satori.utils import get_params_dict, annotate_motifs
 

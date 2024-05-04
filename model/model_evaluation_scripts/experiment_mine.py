@@ -16,7 +16,7 @@ from torch.utils.data.sampler import SubsetRandomSampler
 
 #local imports
 from datasets import DatasetLoadAll, DatasetLazyLoad
-from extract_motifs import get_motif
+from extract_motifs_mine import get_motif
 # from models import AttentionNet
 from utils import get_shuffled_background
 from eval_model_OURCODE import get_model_outputs
@@ -331,9 +331,9 @@ def run_experiment(device, arg_space, params):
         # res_test = evaluateRegular(net, device, test_loader, criterion, output_dir+"/Stored_Values", getPAttn = genPAttn,
         #                                 storePAttn = arg_space.storeInterCNN, getCNN = getCNNout,
         #                                 storeCNNout = arg_space.storeInterCNN, getSeqs = getSequences)
-        model = tf.keras.models.load_model('/users/jcurrie2/data_koconno5/jcurrie2/satori/250_50_promoters_epd_eval_test/model_promoters_nolstm.hd5')
-        test_x = pkl.load(open('/users/jcurrie2/data_koconno5/jcurrie2/satori/250_50_promoters_epd_eval_test/test_X.pkl', 'rb'))
-        test_y = pkl.load(open('/users/jcurrie2/data_koconno5/jcurrie2/satori/250_50_promoters_epd_eval_test/test_y.pkl', 'rb'))
+        model = tf.keras.models.load_model(output_dir + '/model_promoters.hd5')
+        test_x = pkl.load(open(output_dir + '/test_X.pkl', 'rb'))
+        test_y = pkl.load(open(output_dir + '/test_y.pkl', 'rb'))
         res_test = get_model_outputs(model, test_x, test_y)
         test_loss = res_test[0]
         labels = res_test[2][:,0]
@@ -462,14 +462,7 @@ def motif_analysis(res_test, CNNWeights, argSpace, params, for_background = Fals
         else:
             tp_indices = [i for i in range(0,per_batch_labelPreds['labels'].shape[0])]
         NumExamples += len(tp_indices)
-        print('down here')
-        print(CNNoutput.shape)
-        print(per_batch_CNNoutput[tp_indices].shape)
         CNNoutput = np.concatenate((CNNoutput,per_batch_CNNoutput[tp_indices]),axis=0)
-        ### transposed by JC ###
-        print('CNNout shape:')
-        print(CNNoutput.shape)
-        ########################
         Seqs = np.concatenate((Seqs,per_batch_seqs[tp_indices]))
     if argSpace.tfDatabase == None:
         dbpath = '/s/jawar/h/nobackup/fahad/MEME_SUITE/motif_databases/CIS-BP/Homo_sapiens.meme'

@@ -3,7 +3,7 @@ import pickle as pkl
 import numpy as np
 # from simulator import map_decode
 
-def get_model_outputs(model, test_x, test_y, batch_size=128):
+def get_model_outputs(model, test_x, test_y, batch_size=128, num_heads=2, seq_len=300):
     roc = np.asarray([[],[]]).T
     per_batch_labelPreds = {}
     per_batch_testSeqs = {}
@@ -15,19 +15,33 @@ def get_model_outputs(model, test_x, test_y, batch_size=128):
         batch_seqs = test_x[i-batch_size:i]
         batch_labels = test_y[i-batch_size:i]
         seqs = [map_decode(seq) for seq in batch_seqs.numpy()]
-        per_batch_testSeqs[batch_idx] = np.array(seqs)  # might need to use np.column_stack(headers,seqs) headers are probably region coordinates. 
+        # generate random header labels
+        headers = []
+        num_seqs = len(seqs)
+        for i in range(num_seqs):
+            start = np.random.randint(1000)
+            end = np.random.randint(1000)
+            headers.append('>chrZ:' + str(start) + '-' + str(end) + '(.)')
+        per_batch_testSeqs[batch_idx] = np.column_stack((headers,seqs))  # might need to use np.column_stack(headers,seqs) headers are probably region coordinates. 
         # call model
         x = tf.one_hot(batch_seqs, 4, axis=1)
         x = tf.expand_dims(x, -1)
         x = model.convolutions[0](x) 
         per_batch_CNNoutput[batch_idx] = tf.transpose(tf.reshape(x, (x.shape[0], x.shape[2], x.shape[3])), (0,2,1)).numpy()
         x = model.convolutions[1](x) # max pool layer
-        conv_out_shape = (300 - 30)//5 + 1 # hardcoded
+        conv_out_shape = (seq_len - 30)//5 + 1 # hardcoded
         x = tf.reshape(x, (-1, conv_out_shape, 8))
-        # per_batch_CNNoutput[batch_idx] = tf.transpose(x, (0,2,1)).numpy()
         x = x + positional_encoding(conv_out_shape, 8)
         x, pAttn_concat = model.self_attns[0](x)
-        PAttn_all[batch_idx] = pAttn_concat.numpy()  # might need to instead pickle the attention scores
+
+        attention_scores_list = []
+        for i in range(0,batch_size*num_heads,batch_size):
+            attention_scores_list.append(pAttn_concat[i:i+batch_size,:,:])
+        # pAttn_concat = np.stack([pAttn_concat[:128,:,:], pAttn_concat[128:,:,:]], axis=3)
+        pAttn_concat = np.stack(attention_scores_list, axis=3)
+        pAttn_concat = np.reshape(pAttn_concat, (batch_size, conv_out_shape, 2*conv_out_shape))
+        print(pAttn_concat.shape)
+        PAttn_all[batch_idx] = pAttn_concat  # might need to instead pickle the attention scores
         x = model.flatten(x)
         for dense in model.dense:
             x = dense(x)

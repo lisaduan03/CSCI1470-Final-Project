@@ -1,0 +1,9 @@
+               consensus  annotation     ic    mean     std
+0        CTGATGTAAGTACGA           .   9.91  -0.3281  0.5108
+1        CGAAGAAGCAGGTTG           .  10.73  -0.7823  0.5963
+2        TTAGGTCCTAACGAT  crol-F7-16  11.60  -1.3491  0.6239
+3        ACGCTTATACTCCAA           .  10.24  0.2892  0.5054
+4        GGCACCTCCTCACGA  crol-F7-16  10.58  -1.4537  0.4447
+5        TTTGATGACTCTTCC           .   9.64  -0.4043  0.5261
+6        GCTACAAGGACATTA           .  10.44  -0.4080  0.5368
+7        CGTGTTCTTGTGGTG         ttk  11.79  -2.1399  0.6625

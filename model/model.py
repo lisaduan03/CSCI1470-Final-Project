@@ -92,7 +92,7 @@ class SelfAttn(tf.keras.layers.Layer):
         # computing a list of single head attentions, concatenated as a tensor  
         # changed to for loop by JC to allow for attention score extraction 
         single_head_attns = []
-        pAttn_concat = tf.zeros([6992,self.conv_out_shape, self.conv_out_shape])
+        pAttn_concat = tf.zeros([0,self.conv_out_shape, self.conv_out_shape])
         for q, k, v in zip(Q, K, V):
             attn_scores = tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask)
             outs = attn_scores @ v
@@ -102,8 +102,6 @@ class SelfAttn(tf.keras.layers.Layer):
 
         # old code: 
         # single_head_attns = tf.concat([tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask) @ v for q, k, v in zip(Q, K, V)], axis=-1)
-
-        pos_enc = 
 
         # combine single head information via dense layer
         attn_output = single_head_attns @ self.W

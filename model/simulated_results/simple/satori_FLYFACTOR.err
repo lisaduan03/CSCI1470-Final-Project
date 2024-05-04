@@ -1,0 +1,306 @@
+2024-05-04 11:23:10.752908: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-05-04 11:23:10.756043: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2024-05-04 11:23:10.793963: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2024-05-04 11:23:10.793991: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2024-05-04 11:23:10.795170: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-05-04 11:23:10.801232: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-05-04 11:23:12.359415: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+Writing results to output directory '/users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/simple/Motif_Analysis/tomtom'.
+Processing query 1 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 0.990883
+#   Estimated pi_0=0.990883
+Processing query 2 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00044
+#   Estimated pi_0=1
+Processing query 3 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.0035
+#   Estimated pi_0=1
+Processing query 4 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00503
+#   Estimated pi_0=1
+Processing query 5 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00503
+#   Estimated pi_0=1
+Processing query 6 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 0.999671
+#   Estimated pi_0=0.999671
+Processing query 7 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00503
+#   Estimated pi_0=1
+Processing query 8 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00426
+#   Estimated pi_0=1
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+/users/jcurrie2/.conda/envs/satori_new/lib/python3.9/site-packages/sklearn/preprocessing/_data.py:261: UserWarning: Numerical issues were encountered when centering the data and might not be solved. Dataset may contain too large values. You may need to prescale your features.
+  warnings.warn(
+/users/jcurrie2/.conda/envs/satori_new/lib/python3.9/site-packages/sklearn/preprocessing/_data.py:280: UserWarning: Numerical issues were encountered when scaling the data and might not be solved. The standard deviation of the data is probably very close to 0. 
+  warnings.warn(
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+/bin/sh: line 1: weblogo: command not found
+Writing results to output directory '/users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/simple/Motif_Analysis_Negative/tomtom'.
+Processing query 1 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 0.991652
+#   Estimated pi_0=0.991652
+Processing query 2 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00044
+#   Estimated pi_0=1
+Processing query 3 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.0035
+#   Estimated pi_0=1
+Processing query 4 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00426
+#   Estimated pi_0=1
+Processing query 5 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00503
+#   Estimated pi_0=1
+Processing query 6 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 0.999339
+#   Estimated pi_0=1
+Processing query 7 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00503
+#   Estimated pi_0=1
+Processing query 8 out of 8 
+# Computing q-values.
+#   Estimating pi_0 from all 1314 observed p-values.
+#   Estimating pi_0.
+# Minimal pi_zero = 1.00426
+#   Estimated pi_0=1
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+satori/extract_motifs_mine.py:600: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  sns.distplot(f_scores, kde=False)
+/users/jcurrie2/.conda/envs/satori_new/lib/python3.9/site-packages/sklearn/preprocessing/_data.py:261: UserWarning: Numerical issues were encountered when centering the data and might not be solved. Dataset may contain too large values. You may need to prescale your features.
+  warnings.warn(
+/users/jcurrie2/.conda/envs/satori_new/lib/python3.9/site-packages/sklearn/preprocessing/_data.py:280: UserWarning: Numerical issues were encountered when scaling the data and might not be solved. The standard deviation of the data is probably very close to 0. 
+  warnings.warn(

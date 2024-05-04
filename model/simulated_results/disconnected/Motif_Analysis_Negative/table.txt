@@ -1,0 +1,9 @@
+               consensus  annotation     ic    mean     std
+0        GGCATATCTCTTGCC           .  27.02  -1.2097  1.0300
+1        GCAACTTTTACTATG           .  22.84  -1.9783  0.9843
+2        ACTTACACTTGGGGT           .  17.91  -1.8417  0.7235
+3        AAACTGAAGTGCTAC           .  22.02  -1.8273  0.9473
+4        GTGACTTACCCATAA           .  28.09  -0.9173  0.6915
+5        CTGGGCACCAACCCT           .  12.25  -0.9309  0.6152
+6        CCTTGAGTAATACTT     lola-PO  10.28  -0.0690  0.5606
+7        TGCTAAGTACAGGTG           .  12.45  0.0084  0.3470

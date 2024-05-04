@@ -1,0 +1,278 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1897824
+##  Job Name : satori
+##  Nodelist : node1622
+##      CPUs : 15
+##  Mem/Node : 30720 MB
+## Directory : /oscar/home/jcurrie2/satori
+##   Job Started : Sat May  4 11:16:41 AM EDT 2024
+###############################################################################
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+(128, 55, 110)
+  1/313 [..............................] - ETA: 2:11 - loss: 0.5863 - auc: 0.8613 - val_auc: 0.8613 24/313 [=>............................] - ETA: 0s - loss: 0.6257 - auc: 0.8161 - val_auc: 0.8161   50/313 [===>..........................] - ETA: 0s - loss: 0.6079 - auc: 0.8210 - val_auc: 0.8210 75/313 [======>.......................] - ETA: 0s - loss: 0.6137 - auc: 0.8206 - val_auc: 0.8206100/313 [========>.....................] - ETA: 0s - loss: 0.5976 - auc: 0.8253 - val_auc: 0.8253126/313 [===========>..................] - ETA: 0s - loss: 0.6122 - auc: 0.8184 - val_auc: 0.8184152/313 [=============>................] - ETA: 0s - loss: 0.6142 - auc: 0.8176 - val_auc: 0.8176179/313 [================>.............] - ETA: 0s - loss: 0.6168 - auc: 0.8157 - val_auc: 0.8157205/313 [==================>...........] - ETA: 0s - loss: 0.6193 - auc: 0.8144 - val_auc: 0.8144232/313 [=====================>........] - ETA: 0s - loss: 0.6196 - auc: 0.8143 - val_auc: 0.8143258/313 [=======================>......] - ETA: 0s - loss: 0.6251 - auc: 0.8112 - val_auc: 0.8112285/313 [==========================>...] - ETA: 0s - loss: 0.6244 - auc: 0.8109 - val_auc: 0.8109312/313 [============================>.] - ETA: 0s - loss: 0.6202 - auc: 0.8121 - val_auc: 0.8121313/313 [==============================] - 1s 2ms/step - loss: 0.6207 - auc: 0.8120 - val_auc: 0.8120
+num batches: 
+78
+Test Loss: 0.621 and AUC: 0.57 
+
+batch number:  1
+batch number:  2
+batch number:  3
+batch number:  4
+batch number:  5
+batch number:  6
+batch number:  7
+batch number:  8
+batch number:  9
+batch number:  10
+batch number:  11
+batch number:  12
+batch number:  13
+batch number:  14
+batch number:  15
+batch number:  16
+batch number:  17
+batch number:  18
+batch number:  19
+batch number:  20
+batch number:  21
+batch number:  22
+batch number:  23
+batch number:  24
+batch number:  25
+batch number:  26
+batch number:  27
+batch number:  28
+batch number:  29
+batch number:  30
+batch number:  31
+batch number:  32
+batch number:  33
+batch number:  34
+batch number:  35
+batch number:  36
+batch number:  37
+batch number:  38
+batch number:  39
+batch number:  40
+batch number:  41
+batch number:  42
+batch number:  43
+batch number:  44
+batch number:  45
+batch number:  46
+batch number:  47
+batch number:  48
+batch number:  49
+batch number:  50
+batch number:  51
+batch number:  52
+batch number:  53
+batch number:  54
+batch number:  55
+batch number:  56
+batch number:  57
+batch number:  58
+batch number:  59
+batch number:  60
+batch number:  61
+batch number:  62
+batch number:  63
+batch number:  64
+batch number:  65
+batch number:  66
+batch number:  67
+batch number:  68
+batch number:  69
+batch number:  70
+batch number:  71
+batch number:  72
+batch number:  73
+batch number:  74
+batch number:  75
+batch number:  76
+batch number:  77
+(8, 4, 15)
+plot motif fig /users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/pwm_directed_nopos/Motif_Analysis
+about to print filter outs
+(4168, 8, 286)
+Filter 0
+Filter 1
+Filter 2
+Filter 3
+Filter 4
+Filter 5
+Filter 6
+Filter 7
+/users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/pwm_directed_nopos/Motif_Analysis/tomtom/tomtom.txt /users/jcurrie2/data_koconno5/jcurrie2/MEME/fly_factor_survey_with_clamp.meme
+(4168, 286, 8)
+batch number:  1
+batch number:  2
+batch number:  3
+batch number:  4
+batch number:  5
+batch number:  6
+batch number:  7
+batch number:  8
+batch number:  9
+batch number:  10
+batch number:  11
+batch number:  12
+batch number:  13
+batch number:  14
+batch number:  15
+batch number:  16
+batch number:  17
+batch number:  18
+batch number:  19
+batch number:  20
+batch number:  21
+batch number:  22
+batch number:  23
+batch number:  24
+batch number:  25
+batch number:  26
+batch number:  27
+batch number:  28
+batch number:  29
+batch number:  30
+batch number:  31
+batch number:  32
+batch number:  33
+batch number:  34
+batch number:  35
+batch number:  36
+batch number:  37
+batch number:  38
+batch number:  39
+batch number:  40
+batch number:  41
+batch number:  42
+batch number:  43
+batch number:  44
+batch number:  45
+batch number:  46
+batch number:  47
+batch number:  48
+batch number:  49
+batch number:  50
+batch number:  51
+batch number:  52
+batch number:  53
+batch number:  54
+batch number:  55
+batch number:  56
+batch number:  57
+batch number:  58
+batch number:  59
+batch number:  60
+batch number:  61
+batch number:  62
+batch number:  63
+batch number:  64
+batch number:  65
+batch number:  66
+batch number:  67
+batch number:  68
+batch number:  69
+batch number:  70
+batch number:  71
+batch number:  72
+batch number:  73
+batch number:  74
+batch number:  75
+batch number:  76
+batch number:  77
+(8, 4, 15)
+plot motif fig /users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/pwm_directed_nopos/Motif_Analysis_Negative
+about to print filter outs
+(1494, 8, 286)
+Filter 0
+Filter 1
+Filter 2
+Filter 3
+Filter 4
+Filter 5
+Filter 6
+Filter 7
+/users/jcurrie2/data_koconno5/jcurrie2/satori/simulated_results/pwm_directed_nopos/Motif_Analysis_Negative/tomtom/tomtom.txt /users/jcurrie2/data_koconno5/jcurrie2/MEME/fly_factor_survey_with_clamp.meme
+(1494, 286, 8)
+Annotating motifs...
+actually in here
+Done for Attention Cutoff Value:  0.12
+Done for Attention Cutoff Value:  0.04
