@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 
 
-NUM_EPOCHS = 15 # LD changed to see if real data would train
+NUM_EPOCHS = 10 # LD changed to see if real data would train
 BATCH_SZ = 32
 
 # add more weight to positives in BCE loss
@@ -102,6 +102,8 @@ class SelfAttn(tf.keras.layers.Layer):
 
         # old code: 
         # single_head_attns = tf.concat([tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask) @ v for q, k, v in zip(Q, K, V)], axis=-1)
+
+        pos_enc = 
 
         # combine single head information via dense layer
         attn_output = single_head_attns @ self.W
@@ -380,11 +382,10 @@ if __name__ == '__main__':
         )
     ]
 )
-
     history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
     # model.show_figures(history.history)
 
-    model.save("simulated_results/pwm_simple/model_promoters.hd5")
+    model.save("simulated_results/pwm_directed/model_promoters.hd5")
 
     # model.show_figures(history.history)
     # testing
@@ -394,9 +395,9 @@ if __name__ == '__main__':
     test_y = tf.gather(test_y, inds)
 
     import pickle as pkl
-    with open('simulated_results/pwm_simple/test_X.pkl', 'wb') as f:
+    with open('simulated_results/pwm_directed/test_X.pkl', 'wb') as f:
         pkl.dump(test_X, f)
-    with open('simulated_results/pwm_simple/test_y.pkl', 'wb') as f:
+    with open('simulated_results/pwm_directed/test_y.pkl', 'wb') as f:
         pkl.dump(test_y, f)
 
     print(model.test_on_batch(test_X, test_y))
