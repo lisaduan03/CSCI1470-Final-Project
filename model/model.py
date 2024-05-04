@@ -277,10 +277,14 @@ if __name__ == '__main__':
 
         # motifs also arbitrary, maybe try pushing up to match convolution length 
         # dim of 20
-        ttk = np.loadtxt('simulated_results/ttk.txt')
-        clamp = np.loadtxt('simulated_results/clamp.txt')
-        neo = np.loadtxt('simulated_results/neo38.txt')
-        deaf = np.loadtxt('simulated_results/deaf1.txt')
+        # ttk = np.loadtxt('simulated_results/ttk.txt')
+        # clamp = np.loadtxt('simulated_results/clamp.txt')
+        # neo = np.loadtxt('simulated_results/neo38.txt')
+        # deaf = np.loadtxt('simulated_results/deaf1.txt')
+        clamp = np.transpose(np.genfromtxt('simulated_results/clamp_meme.txt', delimiter = '        '))
+        ttk = np.transpose(np.genfromtxt('simulated_results/ttk_meme.txt', delimiter = '        '))
+        neo = np.transpose(np.genfromtxt('simulated_results/neo38_meme.txt', delimiter = '        '))
+        deaf = np.transpose(np.genfromtxt('simulated_results/deaf1_meme.txt', delimiter = '        '))
         sim_data.add_interactions([(('ttk', ttk), ('clamp', clamp)), (('ttk', ttk), ('neo', neo)), (('neo', neo), ('deaf', deaf))])
 
         # rest should be fairly self explanatory here
