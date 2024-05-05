@@ -5,14 +5,14 @@ import pandas as pd
 import sys
 import math
 from tqdm import tqdm
-from simulator import DataSimulator, map_encode
+from simulator import DataSimulator, map_encode, map_decode
 import random
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
 
 
-NUM_EPOCHS = 15 # LD changed to see if real data would train
+NUM_EPOCHS = 1 # LD changed to see if real data would train
 BATCH_SZ = 32
 
 # add more weight to positives in BCE loss
@@ -92,13 +92,15 @@ class SelfAttn(tf.keras.layers.Layer):
         # computing a list of single head attentions, concatenated as a tensor  
         # changed to for loop by JC to allow for attention score extraction 
         single_head_attns = []
-        pAttn_concat = tf.zeros([0,self.conv_out_shape, 2*self.conv_out_shape])
+        running_scores = []
         for q, k, v in zip(Q, K, V):
             attn_scores = tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask)
+            running_scores.append(attn_scores)
             outs = attn_scores @ v
             single_head_attns.append(outs)
-            attn_scores = tf.reshape(attn_scores, (-1, self.conv_out_shape, self.num_heads*self.conv_out_shape))
-            pAttn_concat = tf.concat([pAttn_concat, attn_scores], axis=0)
+            # print(attn_scores)
+        pAttn_concat = tf.concat(running_scores, axis=2)
+        print(pAttn_concat.shape)
         single_head_attns = tf.concat(single_head_attns, axis = -1)
 
         # old code: 
@@ -409,6 +411,13 @@ if __name__ == '__main__':
         pkl.dump(test_y, f)
 
     print(model.test_on_batch(test_X, test_y))
+
+    single_pos, single_neg, single_pos_labels, single_neg_labels = sim_data.simulate(300, 100, True)
+    print(single_pos[0].numpy())
+    print(map_decode(single_pos[0].numpy()))
+    print(tf.expand_dims(single_pos[0], axis=0).shape, tf.one_hot(tf.expand_dims(single_pos_labels[0], axis=0),2).shape)
+    print(model(tf.expand_dims(single_pos[0], axis=0)))
+    print(model.test_on_batch(single_pos, tf.one_hot(single_pos_labels,2)))
 
     # print(test_y[0], model.call(tf.expand_dims(test_X[0], 0)))
     # print(test_y[5], model.call(tf.expand_dims(test_X[5], 0)))

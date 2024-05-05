@@ -7,7 +7,7 @@ import random
 
 # for categorical encoding of sequences (prior to OHE)
 MAP_ENCODE = {'A' : 0, 'C' : 1, 'G' : 2, 'T' : 3}
-MAP_DECODE = {'A' : 0, 'C' : 1, 'G' : 2, 'T' : 3}
+MAP_DECODE = {0 : 'A', 1 : 'C', 2 : 'G', 3 : 'T'}
 
 
 def map_encode(seq : str):

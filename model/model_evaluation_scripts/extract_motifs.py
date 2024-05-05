@@ -1,15 +1,3 @@
-##############################################
-#Credits: This script is taken from https://github.com/MedChaabane/deepRAM
-#A Trebelsi, M Chaabane, A Ben-Hur, DeepRAM
-#############################################
-
-
-
-
-#!/usr/bin/env python
-#########################################
-#Credits: the following functions are taken from https://github.com/davek44/Basset
-########################################
 from optparse import OptionParser
 import copy, os, random, shutil, subprocess, time, gzip
 
