@@ -274,7 +274,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == '--simulate':
         tf.random.set_seed(0)
         random.seed(0)
-        sim_data = DataSimulator("SEQ")
+        sim_data = DataSimulator("PWM")
 
         # motifs also arbitrary, maybe try pushing up to match convolution length 
         # dim of 20
@@ -286,7 +286,7 @@ if __name__ == '__main__':
         ttk = np.transpose(np.genfromtxt('simulated_results/ttk_meme.txt'))
         neo = np.transpose(np.genfromtxt('simulated_results/neo38_meme.txt'))
         deaf = np.transpose(np.genfromtxt('simulated_results/deaf1_meme.txt'))
-        sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('ATCGACGTAGCTAGC', 'GTAGTCCGTCCCGTA'), ('TTAGTCAGTCGATCA', 'ATCGACGTAGCTAGC'), ('CTCAGCTCTATTTTA', 'GTGGTCATGGGTTTT'), ('GTGGTCATGGGTTTT', 'GGTCCGCCCGAGCGG'), ('GGTCCGCCCGAGCGG', 'CTCAGCTCTATTTTA')])
+        sim_data.add_interactions([(('ttk', ttk), ('clamp', clamp)), (('clamp', clamp), ('neo', neo))])
 
         # rest should be fairly self explanatory here
         pos, neg, pos_labels, neg_labels = sim_data.simulate(300, 50000, True)
@@ -391,7 +391,7 @@ if __name__ == '__main__':
     history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
     # model.show_figures(history.history)
 
-    model.save("simulated_results/large_disconnected_random/model_simulate_test.hd5")
+    model.save("simulated_results/pwm_new/model_simulate_test.hd5")
 
     # model.show_figures(history.history)
     # testing
@@ -401,9 +401,9 @@ if __name__ == '__main__':
     test_y = tf.gather(test_y, inds)
 
     import pickle as pkl
-    with open('simulated_results/large_disconnected_random/test_X.pkl', 'wb') as f:
+    with open('simulated_results/pwm_new/test_X.pkl', 'wb') as f:
         pkl.dump(test_X, f)
-    with open('simulated_results/large_disconnected_random/test_y.pkl', 'wb') as f:
+    with open('simulated_results/pwm_new/test_y.pkl', 'wb') as f:
         pkl.dump(test_y, f)
 
     print(model.test_on_batch(test_X, test_y))
