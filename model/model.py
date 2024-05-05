@@ -92,11 +92,12 @@ class SelfAttn(tf.keras.layers.Layer):
         # computing a list of single head attentions, concatenated as a tensor  
         # changed to for loop by JC to allow for attention score extraction 
         single_head_attns = []
-        pAttn_concat = tf.zeros([0,self.conv_out_shape, self.conv_out_shape])
+        pAttn_concat = tf.zeros([0,self.conv_out_shape, 2*self.conv_out_shape])
         for q, k, v in zip(Q, K, V):
             attn_scores = tf.nn.softmax(((q @ tf.transpose(k, [0, 2, 1]))/math.sqrt(k.shape[-1])) + atten_mask)
             outs = attn_scores @ v
             single_head_attns.append(outs)
+            attn_scores = tf.reshape(attn_scores, (-1, self.conv_out_shape, self.num_heads*self.conv_out_shape))
             pAttn_concat = tf.concat([pAttn_concat, attn_scores], axis=0)
         single_head_attns = tf.concat(single_head_attns, axis = -1)
 
@@ -290,6 +291,9 @@ if __name__ == '__main__':
         # rest should be fairly self explanatory here
         pos, neg, pos_labels, neg_labels = sim_data.simulate(300, 50000, True)
 
+        # try making fastas for testing with real satori
+        # seqs = [map_decode(seq) for seq in batch_seqs.numpy()]
+
         train_X = tf.concat([pos, neg], axis=0)
         train_y = tf.concat([pos_labels, neg_labels], axis=0)
 
@@ -387,7 +391,7 @@ if __name__ == '__main__':
     history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
     # model.show_figures(history.history)
 
-    model.save("simulated_results/slightly_connected/model_promoters.hd5")
+    model.save("simulated_results/new_attn_test/model_simulate_test.hd5")
 
     # model.show_figures(history.history)
     # testing
@@ -397,13 +401,12 @@ if __name__ == '__main__':
     test_y = tf.gather(test_y, inds)
 
     import pickle as pkl
-    with open('simulated_results/slightly_connected/test_X.pkl', 'wb') as f:
+    with open('simulated_results/new_attn_test/test_X.pkl', 'wb') as f:
         pkl.dump(test_X, f)
-    with open('simulated_results/slightly_connected/test_y.pkl', 'wb') as f:
+    with open('simulated_results/new_attn_test/test_y.pkl', 'wb') as f:
         pkl.dump(test_y, f)
 
     print(model.test_on_batch(test_X, test_y))
-
 
     # print(test_y[0], model.call(tf.expand_dims(test_X[0], 0)))
     # print(test_y[5], model.call(tf.expand_dims(test_X[5], 0)))
