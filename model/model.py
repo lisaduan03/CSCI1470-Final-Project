@@ -285,8 +285,8 @@ if __name__ == '__main__':
         clamp = np.transpose(np.genfromtxt('simulated_results/clamp_meme.txt'))
         ttk = np.transpose(np.genfromtxt('simulated_results/ttk_meme.txt'))
         neo = np.transpose(np.genfromtxt('simulated_results/neo38_meme.txt'))
-        deaf = np.transpose(np.genfromtxt('simulated_results/deaf1_meme.txt'))
-        sim_data.add_interactions([(('ttk', ttk), ('clamp', clamp)), (('clamp', clamp), ('neo', neo))])
+        blimp = np.transpose(np.genfromtxt('simulated_results/blimp1.txt'))
+        sim_data.add_interactions([(('ttk', ttk), ('clamp', clamp)), (('ttk', ttk), ('neo', neo)), (('clamp', clamp), ('blimp', blimp))])
 
         # rest should be fairly self explanatory here
         pos, neg, pos_labels, neg_labels = sim_data.simulate(300, 50000, True)
@@ -391,7 +391,7 @@ if __name__ == '__main__':
     history = model.fit(train_X, train_y, BATCH_SZ, NUM_EPOCHS, validation_data=(val_X, val_y))
     # model.show_figures(history.history)
 
-    model.save("simulated_results/pwm_new/model_simulate_test.hd5")
+    model.save("simulated_results/pwm_blimp/model_simulate_test.hd5")
 
     # model.show_figures(history.history)
     # testing
@@ -401,9 +401,9 @@ if __name__ == '__main__':
     test_y = tf.gather(test_y, inds)
 
     import pickle as pkl
-    with open('simulated_results/pwm_new/test_X.pkl', 'wb') as f:
+    with open('simulated_results/pwm_blimp/test_X.pkl', 'wb') as f:
         pkl.dump(test_X, f)
-    with open('simulated_results/pwm_new/test_y.pkl', 'wb') as f:
+    with open('simulated_results/pwm_blimp/test_y.pkl', 'wb') as f:
         pkl.dump(test_y, f)
 
     print(model.test_on_batch(test_X, test_y))

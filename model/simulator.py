@@ -246,10 +246,11 @@ class DataSimulator():
                 pos_data.append(self.gen_neg(start1) + m1 + self.gen_neg(start2 - start1 - len(m1)) + m2 + self.gen_neg(seq_lens - start2 - len(m2)))
         
         neg_data = []
-        # rand_neg = (num_seqs - len(pos_data))//2
-        # sys_neg = (num_seqs - len(pos_data) - rand_neg)
-        rand_neg = (num_seqs - len(pos_data))
-        sys_neg = 0
+        rand_neg = (num_seqs - len(pos_data))//2
+        sys_neg = (num_seqs - len(pos_data) - rand_neg)
+        # uncomment for all random negative set
+        # rand_neg = (num_seqs - len(pos_data))
+        # sys_neg = 0
 
         # generate half the negative data as random sequences
         for _ in range(rand_neg):
