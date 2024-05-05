@@ -100,7 +100,6 @@ class SelfAttn(tf.keras.layers.Layer):
             single_head_attns.append(outs)
             # print(attn_scores)
         pAttn_concat = tf.concat(running_scores, axis=2)
-        print(pAttn_concat.shape)
         single_head_attns = tf.concat(single_head_attns, axis = -1)
 
         # old code: 
@@ -412,12 +411,12 @@ if __name__ == '__main__':
 
     print(model.test_on_batch(test_X, test_y))
 
-    single_pos, single_neg, single_pos_labels, single_neg_labels = sim_data.simulate(300, 100, True)
-    print(single_pos[0].numpy())
-    print(map_decode(single_pos[0].numpy()))
-    print(tf.expand_dims(single_pos[0], axis=0).shape, tf.one_hot(tf.expand_dims(single_pos_labels[0], axis=0),2).shape)
-    print(model(tf.expand_dims(single_pos[0], axis=0)))
-    print(model.test_on_batch(single_pos, tf.one_hot(single_pos_labels,2)))
+    # single_pos, single_neg, single_pos_labels, single_neg_labels = sim_data.simulate(300, 100, True)
+    # print(single_pos[0].numpy())
+    # print(map_decode(single_pos[0].numpy()))
+    # print(tf.expand_dims(single_pos[0], axis=0).shape, tf.one_hot(tf.expand_dims(single_pos_labels[0], axis=0),2).shape)
+    # print(model(tf.expand_dims(single_pos[0], axis=0)))
+    # print(model.test_on_batch(single_pos, tf.one_hot(single_pos_labels,2)))
 
     # print(test_y[0], model.call(tf.expand_dims(test_X[0], 0)))
     # print(test_y[5], model.call(tf.expand_dims(test_X[5], 0)))
