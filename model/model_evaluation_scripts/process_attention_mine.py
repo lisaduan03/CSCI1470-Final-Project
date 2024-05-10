@@ -73,12 +73,12 @@ def score_individual_head(data):
 	
 	attn_mat = PAttn[ex,:,:]
 	
-	print('in here')
-	print(params['num_multiheads'])
-	print(attn_mat.shape)
-	print(feat_size)
-	print(attn_mat[:,feat_size*0:feat_size*(0+1)].shape)
-	print(attn_mat[:,feat_size*1:feat_size*(1+1)].shape)
+	# print('in here')
+	# print(params['num_multiheads'])
+	# print(attn_mat.shape)
+	# print(feat_size)
+	# print(attn_mat[:,feat_size*0:feat_size*(0+1)].shape)
+	# print(attn_mat[:,feat_size*1:feat_size*(1+1)].shape)
 	attn_mat = np.asarray([attn_mat[:,feat_size*i:feat_size*(i+1)] for i in range(0,params['num_multiheads'])]) 
 	attn_mat = np.max(attn_mat, axis=0) #out of the 8 attn matrices, get the max value at the corresponding positions
 	
@@ -256,8 +256,8 @@ def estimate_interactions(num_filters, params, tomtom_data, motif_dir, verbose =
 
 		with Pool(processes = numWorkers) as pool:
 			# print(fdata)
-			print('here')
-			print(score_individual_head(fdata[0]))
+			# print('here')
+			# print(score_individual_head(fdata[0]))
 			result = pool.map(score_individual_head, fdata, chunksize=1)
 		for element in result:
 			bid = element[0]
@@ -502,6 +502,9 @@ def infer_intr_attention(experiment_blob, params, argSpace):
 	output_dir = experiment_blob['output_dir']
 	motif_dir_pos = experiment_blob['motif_dir_pos']
 	motif_dir_neg = experiment_blob['motif_dir_neg']
+
+	# print('interactions output dir:')
+	# print(output_dir)
 
 	Interact_dir = output_dir + '/Interactions_SATORI'
 	if not os.path.exists(Interact_dir):

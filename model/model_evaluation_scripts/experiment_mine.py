@@ -374,7 +374,7 @@ def run_experiment(device, arg_space, params):
                 # 'test_indices': test_indices,
                 'CNN_weights': CNNWeights,
                 # 'criterion': criterion,
-                'output_dir': '/users/jcurrie2/data_koconno5/jcurrie2/satori/250_50_promoters_epd_eval_test',
+                'output_dir': output_dir,
                 # 'net': net,
                 # 'optimizer': optimizer,
                 # 'saved_model_dir': saved_model_dir
@@ -440,6 +440,8 @@ def motif_analysis(res_test, CNNWeights, argSpace, params, for_background = Fals
     else:
         tp_indices = [i for i in range(0,per_batch_labelPreds['labels'].shape[0])]
     NumExamples += len(tp_indices)
+    print('right here')
+    print(CNNoutput.shape)
     CNNoutput = CNNoutput[tp_indices]
     Seqs = Seqs[tp_indices]
     for k in range(1,len(res_test[3])):

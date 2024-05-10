@@ -538,7 +538,6 @@ def plot_filter_heat(param_matrix, out_pdf):
 
 ##Changes made by Fahad Ullah
 def plot_filter_logo(filter_outs, filter_size, seqs, out_prefix, raw_t=0, maxpct_t=None):
-
     if maxpct_t:
         all_outs = np.ravel(filter_outs)
         all_outs_mean = all_outs.mean()
