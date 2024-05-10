@@ -22,7 +22,7 @@ def get_model_outputs(model, test_x, test_y, batch_size=128, num_heads=2, seq_le
             start = np.random.randint(1000)
             end = np.random.randint(1000)
             headers.append('>chrZ:' + str(start) + '-' + str(end) + '(.)')
-        per_batch_testSeqs[batch_idx] = np.column_stack((headers,seqs))  # might need to use np.column_stack(headers,seqs) headers are probably region coordinates. 
+        per_batch_testSeqs[batch_idx] = np.column_stack((headers,seqs)) 
         # call model
         x = tf.one_hot(batch_seqs, 4, axis=1)
         x = tf.expand_dims(x, -1)
@@ -34,17 +34,8 @@ def get_model_outputs(model, test_x, test_y, batch_size=128, num_heads=2, seq_le
         x = x + positional_encoding(conv_out_shape, 8)
         x, pAttn_concat = model.self_attns[0](x)
 
-        # attention_scores_list = []
-        # for i in range(0,batch_size*num_heads,batch_size):
-        #     attention_scores_list.append(pAttn_concat[i:i+batch_size,:,:])
-
-        # print(pAttn_concat[:128,:,:].shape)
-        # print(pAttn_concat[128:,:,:].shape)
-        # pAttn_concat = np.stack([pAttn_concat[:128,:,:], pAttn_concat[128:,:,:]], axis=3)
-        # pAttn_concat = np.stack(attention_scores_list, axis=3)
-        # pAttn_concat = np.reshape(pAttn_concat, (batch_size, conv_out_shape, 2*conv_out_shape))
         print(pAttn_concat.shape)
-        PAttn_all[batch_idx] = pAttn_concat  # might need to instead pickle the attention scores
+        PAttn_all[batch_idx] = pAttn_concat 
         x = model.flatten(x)
         for dense in model.dense:
             x = dense(x)

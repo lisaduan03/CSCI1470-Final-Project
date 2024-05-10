@@ -17,11 +17,11 @@ def get_filters_in_individual_seq(sdata):
 	header,num_filters,filter_data_dict,CNNfirstpool = sdata
 	s_info_dict = {}
 	for j in range(0,num_filters):
-		filter_data = filter_data_dict['filter'+str(j)] #np.loadtxt(motif_dir+'/filter'+str(j)+'_logo.fa',dtype=str)
+		filter_data = filter_data_dict['filter'+str(j)] 
 		for k in range(0,len(filter_data),2):
 			hdr = filter_data[k].split('_')[0]
 			if hdr == header:
-				pos = int(filter_data[k].split('_')[-2]) #-2 because the format is header_num_pos_activation
+				pos = int(filter_data[k].split('_')[-2]) 
 				pooled_pos = int(pos/CNNfirstpool)
 				key = pooled_pos#header+'_'+str(pooled_pos)
 				if key not in s_info_dict:
@@ -51,12 +51,7 @@ def get_filters_in_seq_dict(all_seqs,motif_dir,num_filters,CNNfirstpool,numWorke
 
 def score_individual_head(data):
 	count,header,seq_inf_dict,k,ex,params,tomtom_data,attn_cutoff,sequence_len,CNNfirstpool,num_filters,motif_dir,feat_size,storeInterCNN,considerTopHit = data
-	#print(k,ex)
-	global Prob_Attention_All# = res_test[3]
-	#global Seqs# = res_test[6]
-	#global LabelPreds# = res_test[4]
-	#global Filter_Intr_Attn
-	#global Filter_Intr_Pos
+	global Prob_Attention_All
 	global Filter_Intr_Keys
 	
 	filter_Intr_Attn = np.ones(len(Filter_Intr_Keys))*-1
@@ -69,16 +64,8 @@ def score_individual_head(data):
 		with open(PAttn,'rb') as f:
 			PAttn = pickle.load(f)
 	
-	#filter_intr_dict = {}
-	
 	attn_mat = PAttn[ex,:,:]
 	
-	# print('in here')
-	# print(params['num_multiheads'])
-	# print(attn_mat.shape)
-	# print(feat_size)
-	# print(attn_mat[:,feat_size*0:feat_size*(0+1)].shape)
-	# print(attn_mat[:,feat_size*1:feat_size*(1+1)].shape)
 	attn_mat = np.asarray([attn_mat[:,feat_size*i:feat_size*(i+1)] for i in range(0,params['num_multiheads'])]) 
 	attn_mat = np.max(attn_mat, axis=0) #out of the 8 attn matrices, get the max value at the corresponding positions
 	
@@ -126,11 +113,7 @@ def score_individual_head_bg(data):
 	
 	count,header,seq_inf_dict,k,ex,params,tomtom_data,attn_cutoff,sequence_len,CNNfirstpool,num_filters,motif_dir,feat_size,storeInterCNN,considerTopHit = data
 	
-	global Prob_Attention_All_neg# = res_test[3]
-	#global Seqs_neg# = res_test[6]
-	#global LabelPreds_neg# = res_test[4]
-	#global Filter_Intr_Attn
-	#global Filter_Intr_Pos
+	global Prob_Attention_All_neg
 	global Filter_Intr_Keys
 	
 	filter_Intr_Attn = np.ones(len(Filter_Intr_Keys))*-1
@@ -255,9 +238,6 @@ def estimate_interactions(num_filters, params, tomtom_data, motif_dir, verbose =
 				break
 
 		with Pool(processes = numWorkers) as pool:
-			# print(fdata)
-			# print('here')
-			# print(score_individual_head(fdata[0]))
 			result = pool.map(score_individual_head, fdata, chunksize=1)
 		for element in result:
 			bid = element[0]
@@ -271,7 +251,6 @@ def estimate_interactions(num_filters, params, tomtom_data, motif_dir, verbose =
 		end_time = time.time()
 		if verbose:	
 			print("Done for Batch: ",k, "Sequences Done: ",count, "Time Taken: %d seconds"%round(end_time-start_time))
-				#print("Done for batch: ",k, "example: ",ex, "count: ",count)
 	pop_size = count * params['num_multiheads'] #* int(np.ceil(attn_cutoff)) #total sequences tested x # multi heads x number of top attn scores allowed
 	return seq_info_dict_list
 
@@ -444,19 +423,7 @@ def analyze_interactions(argSpace, Interact_dir, tomtom_data, plot_dist=True):
 		
 		final_interactions = [['filter_interaction','example_no','mean_distance','mean_distance_bg','num_obs','num_obs_bg','pval','adjusted_pval']]
 		for entry in res_final_int:                                                                                                                                                                    
-			# f1,f2 = entry[0].split('<-->')                                                                                                                                                             	                                                                                                                                                                      
-			# m1_ind = np.argwhere(tomtom_data[:,0]==f1)                                                                                                                                                 
-			# m2_ind = np.argwhere(tomtom_data[:,0]==f2)                                                                                                                                                 
-			# #print(m1_ind,m2_ind)
-			# if len(m1_ind) == 0 or len(m2_ind) == 0:
-			# 	continue
-			# m1 = tomtom_data[m1_ind[0][0]][1]
-			# m2 = tomtom_data[m2_ind[0][0]][1]
-			# m1_pval = tomtom_data[m1_ind[0][0]][5]
-			# m2_pval = tomtom_data[m2_ind[0][0]][5]
-			# final_interactions.append([entry[0],entry[1],m1,m1_pval,m2,m2_pval,entry[2],entry[3],entry[4],entry[5],entry[-2],entry[-1]])
 			final_interactions.append([entry[0],entry[1],entry[2],entry[3],entry[4],entry[5],entry[-2],entry[-1]])
-			#print(entry[-1],m1,m2,entry[0])
 		np.savetxt(Interact_dir+'/interactions_summary_attnLimit-'+str(attnLimit)+'.txt',final_interactions,fmt='%s',delimiter='\t')
 		with open(Interact_dir+'/processed_results_attnLimit-'+str(attnLimit)+'.pckl','wb') as f:
 			pickle.dump([pval_info,res_final_int],f)

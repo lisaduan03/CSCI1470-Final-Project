@@ -266,71 +266,15 @@ def run_experiment(device, arg_space, params):
     batch_size = params['batch_size']
     max_epochs = params['num_epochs']
 
-    prefix = 'modelRes' #Using generic, not sure if we need it as an argument or part of the params dict
-    # train_loader, train_indices, test_loader, test_indices, valid_loader, valid_indices, output_dir = load_datasets(arg_space, batch_size)
-    #print(params)
-    #---------test code-------#
-    #for batch in train_loader:
-    #    pdb.set_trace()
-    #    print(batch[0][:10])
-    #--------test code-------#
-    # net = AttentionNet(arg_space, params, device=device).to(device)
+    prefix = 'modelRes' 
     if num_labels == 2:
         criterion = nn.CrossEntropyLoss(reduction='mean')
     else:
         criterion = nn.BCEWithLogitsLoss()
-    # optimizer = optim.Adam(net.parameters())
-    # saved_model_dir = output_dir+'/Saved_Model'
-    # if not os.path.exists(saved_model_dir):
-    #     os.makedirs(saved_model_dir)
-    ##-------Main train/test loop----------##
-    # if arg_space.mode == 'train':
-    #     best_valid_loss = np.inf
-    #     best_valid_auc = np.inf
-    #     for epoch in progress_bar(range(1, max_epochs + 1)):
-    #         if num_labels == 2:
-    #             res_train = trainRegular(net, device, train_loader, optimizer, criterion)
-    #         else:
-    #             res_train = trainRegularMC(net, device, train_loader, optimizer, criterion)
-    #         res_train_auc = np.asarray(res_train[1]).mean()
-    #         res_train_loss = res_train[0]
-    #         if arg_space.verbose:
-    #             print("Train Results (Loss and AUC): ", res_train_loss, res_train_auc)
-    #         if num_labels == 2:
-    #             res_valid = evaluateRegular(net, device, valid_loader, criterion, output_dir+"/Stored_Values", getPAttn=False,
-    #                                     storePAttn = False, getCNN = False,
-    #                                     storeCNNout = False, getSeqs = False) #evaluateRegular(net,valid_loader,criterion)
-    #             res_valid_loss = res_valid[0]
-    #             res_valid_auc = res_valid[1]   
-    #         else:
-    #             res_valid = evaluateRegularMC(net, device, valid_loader, criterion, output_dir+"/Stored_Values", getPAttn=False,
-    #                                     storePAttn = False, getCNN = False,
-    #                                     storeCNNout = False, getSeqs = False) #evaluateRegular(net,valid_loader,criterion)
-    #             res_valid_loss = res_valid[0]
-    #             res_valid_auc = np.mean(res_valid[1])  
-    #         if res_valid_loss < best_valid_loss:
-    #             best_valid_loss = res_valid_loss
-    #             best_valid_auc = res_valid_auc
-    #             if arg_space.verbose:
-    #                 print("Best Validation Loss: %.3f and AUC: %.2f"%(best_valid_loss, best_valid_auc), "\n")
-    #             torch.save({'epoch': epoch,
-    #                     'model_state_dict': net.state_dict(),
-    #                     'optimizer_state_dict':optimizer.state_dict(),
-    #                     'loss':res_valid_loss
-    #                     },saved_model_dir+'/model')
-    # try:    
-    #     checkpoint = torch.load(saved_model_dir+'/model')
-    #     net.load_state_dict(checkpoint['model_state_dict'])
-    #     optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-    #     epoch = checkpoint['epoch']
-    #     loss = checkpoint['loss']
-    # except:
-    #     raise Exception(f"No pre-trained model found at {saved_model_dir}! Please run with --mode set to train.")
+    
 
     if num_labels == 2:
-        # res_test = evaluateRegular(net, device, test_loader, criterion, output_dir+"/Stored_Values", getPAttn = genPAttn,
-        #                                 storePAttn = arg_space.storeInterCNN, getCNN = getCNNout,
-        #                                 storeCNNout = arg_space.storeInterCNN, getSeqs = getSequences)
+        
         model = tf.keras.models.load_model(output_dir + '/model_promoters.hd5')
         test_x = pkl.load(open(output_dir + '/test_X.pkl', 'rb'))
         test_y = pkl.load(open(output_dir + '/test_y.pkl', 'rb'))
@@ -355,29 +299,12 @@ def run_experiment(device, arg_space, params):
         with open(output_dir+'/'+prefix+'_prc.pckl','wb') as f:
             pickle.dump(prc_dict,f)
         np.savetxt(output_dir+'/'+prefix+'_results.txt',some_res,fmt='%s',delimiter='\t')
-    # else:
-    #     res_test = evaluateRegularMC(net, device, test_loader, criterion, output_dir+"/Stored_Values", getPAttn = genPAttn,
-    #                                     storePAttn = arg_space.storeInterCNN, getCNN = getCNNout,
-    #                                     storeCNNout = arg_space.storeInterCNN, getSeqs = getSequences)
-    #     test_loss = res_test[0]
-    #     test_auc = res_test[1]
-    #     if arg_space.verbose:
-    #         print("Test Loss and mean AUC: ",test_loss, np.mean(test_auc))
-    #     np.savetxt(output_dir+'/per_class_AUC.txt',test_auc,delimiter='\t',fmt='%s')
 
     # CNNWeights = net.layer1[0].weight.cpu().detach().numpy()
     CNNWeights = np.reshape(np.array([v for v in model.trainable_variables if v.name == 'conv2d/kernel:0']), (8,4,15)) # prob not right, also hardcoded for testing..
     res_blob = {'res_test': res_test, 
-                # 'train_loader': train_loader,
-                # 'train_indices': train_indices, 
-                # 'test_loader': test_loader,
-                # 'test_indices': test_indices,
                 'CNN_weights': CNNWeights,
-                # 'criterion': criterion,
                 'output_dir': output_dir,
-                # 'net': net,
-                # 'optimizer': optimizer,
-                # 'saved_model_dir': saved_model_dir
                }
     return res_blob
 

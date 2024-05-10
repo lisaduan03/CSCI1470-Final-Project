@@ -1,3 +1,15 @@
+##############################################
+#Credits: This script is taken from https://github.com/MedChaabane/deepRAM
+#A Trebelsi, M Chaabane, A Ben-Hur, DeepRAM
+#############################################
+
+
+
+
+#!/usr/bin/env python
+#########################################
+#Credits: the following functions are taken from https://github.com/davek44/Basset
+########################################
 from optparse import OptionParser
 import copy, os, random, shutil, subprocess, time, gzip
 
@@ -86,7 +98,8 @@ def make_filter_pwm(filter_fasta):
     nsites = 4 # pseudocounts
     for line in open(filter_fasta):
         #### JC changing from ' if line[0] != '>': ' to ' line[1] != '_': '
-        if line[1] != '_':
+        if line[0] != '>':
+        # if line[1] != '_':
             seq = line.rstrip()
             nsites += 1
             if len(pwm_counts) == 0:
@@ -473,69 +486,18 @@ def plot_filter_heat(param_matrix, out_pdf):
         ax.set_yticklabels('ACGT', rotation='horizontal') # , size=10)
     plt.savefig(out_pdf)
     plt.close()
-
-
-################################################################################
-# plot_filter_logo
-#
-# Plot a weblogo of the filter's occurrences
-#
-# Input
-#  param_matrix: np.array of the filter's parameter matrix
-#  out_pdf:
-#weblogo -X NO -Y NO --errorbars NO --fineprint ""  -C "#CB2026" A A -C "#34459C" C C -C "#FBB116" G G -C "#0C8040" T T <filter1_logo.fa >filter1.eps
-################################################################################
-#def plot_filter_logo(filter_outs, filter_size, seqs, out_prefix, raw_t=0, maxpct_t=None):
-    #if maxpct_t:
-        #all_outs = np.ravel(filter_outs)
-        #all_outs_mean = all_outs.mean()
-        #all_outs_norm = all_outs - all_outs_mean
-        #if embedding:
-            #raw_t = 0.60 * all_outs_norm.max() + all_outs_mean
-        #else:
-            #raw_t = 0.65 * all_outs_norm.max() + all_outs_mean
-        ##raw_t = 0.65 * all_outs_norm.max() + all_outs_mean
-        
-    
-    ## print fasta file of positive outputs
-    #filter_fasta_out = open('%s.fa' % out_prefix, 'w')
-    #filter_count = 0
-    #for i in range(filter_outs.shape[0]):
-        #for j in range(filter_outs.shape[1]):
-            #if filter_outs[i,j] > raw_t:
-                ##print(len(seqs[i]))
-                #fw.write(str(j))
-                #fw.write('\n')
-                #kmer = seqs[i][j:j+filter_size]
-                ##kmer = kmer.replace('T','U')
-                #incl_kmer = len(kmer) - kmer.count('N')
-                #if incl_kmer <filter_size:
-                    #continue
-                #print('>%d_%d' % (i,j), file=filter_fasta_out)
-                #print(kmer, file=filter_fasta_out)
-                #filter_count += 1
-    #filter_fasta_out.close()
-    
-    #print ('plot logo')
-    ## make weblogo
-    #if filter_count > 0:
-        #weblogo_cmd = 'weblogo %s < %s.fa > %s.eps' % (weblogo_opts, out_prefix, out_prefix)
-        #subprocess.call(weblogo_cmd, shell=True)
         
 
 ##Changes made by Fahad Ullah
 def plot_filter_logo(filter_outs, filter_size, seqs, out_prefix, raw_t=0, maxpct_t=None):
-
     if maxpct_t:
         all_outs = np.ravel(filter_outs)
         all_outs_mean = all_outs.mean()
         all_outs_norm = all_outs - all_outs_mean
         if embedding:
-            raw_t = 0.8 * all_outs_norm.max() + all_outs_mean                                 # I CHANGED THIS FROM 0.6 to 0.85
+            raw_t = 0.8 * all_outs_norm.max() + all_outs_mean                                 # JC changed from 0.6 to 0.85
         else:
-            raw_t = 0.85 * all_outs_norm.max() + all_outs_mean                                 # I CHANGED THIS FROM 0.65 to 0.90
-        #raw_t = 0.65 * all_outs_norm.max() + all_outs_mean
-        #raw_t = maxpct_t * all_outs_norm.max() + all_outs_mean
+            raw_t = 0.85 * all_outs_norm.max() + all_outs_mean                                 # JC changed from 0.65 to 0.90
         
     # SAME padding
     #pad_side = (filter_size - 1) // 2
@@ -547,20 +509,15 @@ def plot_filter_logo(filter_outs, filter_size, seqs, out_prefix, raw_t=0, maxpct
         for j in range(filter_outs.shape[1]):
         #for j in range(pad_side, filter_outs.shape[1]-pad_side):
             if filter_outs[i,j] > raw_t:
-                #js = j - pad_side
-                # print(seqs[i])
-                # kmer = seqs[i][1][j:j+filter_size]
-                # JC changed:
-                kmer = seqs[i][j:j+filter_size]
-                ############
-                # print(kmer)
+            
+                kmer = seqs[i][1][j:j+filter_size]
+            
                 incl_kmer = len(kmer) - kmer.count('N')
                 if incl_kmer <filter_size:
                     continue
                 print('%s_%d_%d_%f' % (seqs[i][0],i,j,filter_outs[i,j]), file = filter_fasta_out)
                 print(kmer, file = filter_fasta_out)
-                #print >> filter_fasta_out, '>%s_%d_%d' % (seqs[i][0],i,j)
-                #print >> filter_fasta_out, kmer
+                
                 filter_count += 1
     filter_fasta_out.close()
 
@@ -613,9 +570,6 @@ def get_motif_fig(filter_weights, filter_outs, out_dir, seqs, sample_i = 0):
         print ('Filter %d' % f)
         # plot filter parameters as a heatmap
         plot_filter_heat(filter_weights[f,:,:filter_size], '%s/filter%d_heat.pdf' % (out_dir,f))
-
-        # write possum motif file
-        #filter_possum(filter_weights[f,:, :filter_size], 'filter%d'%f, '%s/filter%d_possum.txt'%(out_dir,f), False)
 
         # plot weblogo of high scoring outputs
         plot_filter_logo(filter_outs[:,f,:], filter_size, seqs, '%s/filter%d_logo'%(out_dir,f), maxpct_t=0.5)
@@ -721,9 +675,7 @@ def get_motif(filter_weights_old, filter_outs, testing, dpath, y = [], index = 0
     print (filter_weights_old.shape)
     filter_weights = []
     for x in filter_weights_old:
-        #normalized, scale = preprocess_data(x)
-        #normalized = normalized.T
-        #normalized = normalized/normalized.sum(axis=1)[:,None]
+    
         x = x - np.mean(x,axis = 0)
         filter_weights.append(x)
         
