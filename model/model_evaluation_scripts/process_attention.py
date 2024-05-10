@@ -374,13 +374,13 @@ def analyze_interactions(argSpace, Interact_dir, tomtom_data, plot_dist=True):
 		plt.savefig(Interact_dir+'/Attn_scores_distributions_MeanPerInteraction.pdf')
 		plt.clf()
 	
-	#attnLimits = [0.01, 0.02, 0.03] + [argSpace.attnCutoff * i for i in range(1,11)] #save results for 10 different attention cutoff values (maximum per interaction) eg. [0.05, 0.10, 0.15, 0.20, 0.25, ...]
+	
 	attnLimits = [argSpace.attnCutoff] if argSpace.attnCutoff==0.12 else [0.12, argSpace.attnCutoff]
 	for attnLimit in attnLimits:
-		pval_info = []#{}
+		pval_info = []
 		for i in range(0,Filter_Intr_Attn.shape[0]):                                                                                                                                                   
 			pos_attn = Filter_Intr_Attn[i,:]                                                                                                                                                              
-			pos_attn = pos_attn[pos_attn!=-1]#pos_attn[pos_attn>0.04] #pos_attn[pos_attn!=-1]                                                                                                                                                                   
+			pos_attn = pos_attn[pos_attn!=-1]                                                                                                                                                          
 			neg_attn = Filter_Intr_Attn_neg[i,:]                                                                                                                                                          
 			neg_attn = neg_attn[neg_attn!=-1]#neg_attn[neg_attn>0.04] #neg_attn[neg_attn!=-1] 
 			num_pos = len(pos_attn)
@@ -444,10 +444,7 @@ Filter_Intr_Pos_neg = None
 Filter_Intr_Keys = None
 tp_pos_dict = None
 num_labels = None
-#######################
 
-
-# entry point to this module: will do all the processing (will be called from satori.py)
 def infer_intr_attention(experiment_blob, params, argSpace):
 	global Prob_Attention_All
 	global Prob_Attention_All_neg

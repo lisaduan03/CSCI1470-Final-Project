@@ -1,3 +1,5 @@
+This file contains some of our notes on simulated experiments we ran, although
+our paper is more exhaustive.
 
 Simple graph (0.9972)
 sim_data.add_interactions([('GTAGTCCGTCCCGTA', 'TTAGTCAGTCGATCA'), ('GTAGTCCGTCCCGTA', 'ATCGACGTAGCTAGC'), ('ATCGACGTAGCTAGC', 'CGATTCTAGCTAGCA')])

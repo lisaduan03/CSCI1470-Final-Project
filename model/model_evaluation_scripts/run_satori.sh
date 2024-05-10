@@ -12,7 +12,7 @@
 module load miniconda3
 source activate /users/jcurrie2/.conda/envs/satori_new
 
-python3 satori_mine.py /users/jcurrie2/promoter_predict/250_50_dros_promoters_background_epd hparamfile.txt \
+python3 satori.py /users/jcurrie2/promoter_predict/250_50_dros_promoters_background_epd hparamfile.txt \
         --verbose \
         --outDir /users/jcurrie2/data_koconno5/jcurrie2/satori/pwm_lastchance \
         --mode test \
