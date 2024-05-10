@@ -8,13 +8,13 @@ and experimentation along the way.
 
 ## Code Structure
 
-In the data folder, we have all data for 5001 promotoers from the eukaryotic
+In the data folder, we have all data for 5001 promoters from the eukaryotic
 promoter database for *D. melanogaster*. We preprocess and utilize this data
 in the model directory.
 
 In the model folder, we have our model (in model.py), our simulator for
 generating clean motif interaction data (in simulator.py), our results on real
-and simulated data (in real and simulated results respectivly), and our scripts
+and simulated data (in real and simulated results respectively), and our scripts
 for attempting to pull self-attention weights out of our model in a biologically
 meaningful way (model_evaluation_scripts).
 
